@@ -9,7 +9,7 @@ import Levenshtein
 
 from controller.base import *
 from module.services import randId
-from controller.todo_entity import TodoMatchEntity
+from module.todo_entity import TodoMatchEntity
 
 
 class TodoListHandler(BaseHandler):
