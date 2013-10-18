@@ -7,6 +7,7 @@ class TodoMatchEntity(object):
                 self.todo_id = todo_id
 
         def load(self, entity):
+                self.todo_slug = entity.todo_slug
                 self.user_name = entity.nickname
                 self.todo_what = entity.todo_what
                 self.todo_when = entity.todo_when

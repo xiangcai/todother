@@ -8,6 +8,10 @@ class TodoModule(tornado.web.UIModule):
     def render(self, entry):
         return self.render_string("modules/todo.html", entry=entry)
 
+class TodoMatchModule(tornado.web.UIModule):
+    def render(self, entry):
+        return self.render_string("modules/todo_match.html", entry=entry)
+
 
 def update_querystring(url, **kwargs):
     base_url = urlparse.urlsplit(url)

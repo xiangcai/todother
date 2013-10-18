@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block body %}
+  {% for entry in entries %}
+    {% module TodoMatchModule(entry) %}
+  {% end %}
+  {% module PageMudule(page, pagesize, totalnum) %}
+
+  {% if current_user %}
+    <div class="admin"><a href="/todo/{{ selfid }}">{{ _("Edit this Todo") }}</a></div>
+  {% end %}
+{% end %}

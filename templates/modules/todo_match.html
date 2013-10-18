@@ -1,0 +1,19 @@
+<div class="entry">
+  <h1><a href="/todo/{{ entry.todo_slug }}">{{ entry.todo_slug }}</a></h1>
+ 
+  User Name: <div class="date">{{ entry.user_name }}</div>
+  User Gender: <div class="date">{{ entry.user_gender }}</div>
+  User Language: <div class="date">{{ entry.user_language }}</div>
+
+  Todo: <div class="date">{{ entry.todo_what }}</div>
+  Target Time: <div class="date">{{ entry.todo_when }}</div>
+
+
+
+  Todo Created: <div class="date">{{ entry.todo_created_date }}</div>
+  Last Update: <div class="date">{{ entry.todo_updated_date }}</div>
+  Distance from you: <div class="date">{{ entry.todo_distance }}</div>
+  Match: <div class="date">{{ "{:.0%}".format(entry.todo_match) }}</div>
+ 
+  
+</div>

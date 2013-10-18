@@ -14,17 +14,12 @@ from module.todo_entity import TodoMatchEntity
 
 class TodoListHandler(BaseHandler):
 	def get(self):
-		page = int(self.get_argument("page",1))
-		pagesize=1
+		
 		entries = self.db.query("SELECT * FROM todo ORDER BY todo_created_date ")
 		if not entries:
 			self.redirect("/todo_compose")
 			return
-		start = page*pagesize-1
-		end = (page+1)*pagesize-1
-		page_entries=entries[start:end]
-		total = len(entries)
-		self.render("todo_list.html", entries=page_entries,page=page,totalnum=total,pagesize=pagesize,title="My Todo")
+		self.render("todo_list.html", entries=entries,title="My Todo")
 
 class TodoHandler(BaseHandler):
 	def get(self, slug):
@@ -75,13 +70,16 @@ class TodoFindHandler(BaseHandler):
 		what_match = 0.7
 		total_match = 0
 
-		result_dic = {}
-		result = None
+		result = []
 
 		id = self.get_argument("id", None)
+		page = int(self.get_argument("page",0))
+		pagesize=10
+
 		selfentry = None
 		if id:
 			selfentry = self.db.get("SELECT * FROM todo WHERE todo_id = %s", int(id))
+			selfid = selfentry.todo_slug
 			#TODO filter out current user's todo
 			entries = self.db.query("SELECT t.*, u.nickname,u.language,u.gender FROM todo t left join auth_user u on todo_user_id = user_id WHERE todo_id != %s", int(id))
 			if selfentry and entries:
@@ -95,4 +93,14 @@ class TodoFindHandler(BaseHandler):
 					match = match + Levenshtein.ratio(entry.todo_what,selfentry.todo_what)
 					todo_match = TodoMatchEntity(entry.todo_id)
 					todo_match.load(entry)
-					result_dic[todo_match]=match
+					todo_match.todo_match = match
+					result.append(todo_match)
+		
+		start = page*pagesize
+		end = (page+1)*pagesize-1
+		page_result=result[start:end]
+
+		page_result.sort(key=lambda todo_match: todo_match.todo_match, reverse=True)
+
+		total = len(result)
+		self.render("todo_find.html", entries=page_result,page=page,totalnum=total,pagesize=pagesize,selfid=selfid,title="Find Todo")
