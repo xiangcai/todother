@@ -16,7 +16,7 @@ from module.todo_entity import TodoMatchEntity
 class TodoListHandler(BaseHandler):
     def get(self):
         
-        entries = self.db.query("SELECT * FROM todo ORDER BY todo_created_date ")
+        entries = self.db.query("SELECT * FROM todo WHERE todo_user_id = %s ORDER BY todo_created_date ", self.current_user.user_id)
         if not entries:
             self.redirect("/todo_compose")
             return
@@ -94,12 +94,12 @@ class TodoFindHandler(BaseHandler):
                     todo_match.load(entry)
                     todo_match.todo_match = match
                     result.append(todo_match)
-        
-        start = page*pagesize
-        end = (page+1)*pagesize-1
-        page_result=result[start:end]
 
-        page_result.sort(key=lambda todo_match: todo_match.todo_match, reverse=True)
+                start = page*pagesize
+                end = (page+1)*pagesize-1
+                page_result=result[start:end]
+
+                page_result.sort(key=lambda todo_match: todo_match.todo_match, reverse=True)
 
         total = len(result)
         self.render("todo_find.html", entries=page_result,page=page,totalnum=total,pagesize=pagesize,selfid=selfid,title="Find Todo")
