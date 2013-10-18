@@ -53,8 +53,7 @@ class TodoComposeHandler(BaseHandler):
                 "UPDATE todo SET todo_what = %s, todo_when = %s, todo_updated_date=UTC_TIMESTAMP()"
                 "WHERE todo_id = %s", what, when, int(id))
         else:
-            slug = uuid.uuid1()
-            if not slug: slug = "todo"
+            slug = str(uuid.uuid1())
             
             self.db.execute(
                 "INSERT INTO todo (todo_user_id,todo_what,todo_when,todo_slug,todo_created_date,todo_updated_date)"
