@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>{{ title }}</title>
+<script type="text/javascript" src="static/js/jquery-1.10.2.min.js"></script>
+<link rel="stylesheet" href="static/css/bootstrap.css" type="text/css">
+</head>
+<body>
+<form>
+<div id="err_container" class="error hidden">
+    <strong>Error!</strong><span id="err_info"></span>
+</div>
+<label for="reg_email">{{ _('Email') }}</label>
+<input type="text" id="reg_email" name="email"/>
+<label for="reg_nickname">{{ _('Nickname') }}</label>
+<input type="text" id="reg_nickname" name="nickname"/>
+<label for="reg_password">{{ _('Password') }}</label>
+<input type="password" id="reg_password" name="password"/>
+<label for="reg_repwd">{{ _('Retype password') }}</label>
+<input type="password" id="reg_repwd" />
+<a class="btn btn-primary" href="#" onclick="check_reg()">{{ _("Register") }}</a>
+</form>
+<script type="text/javascript">
+function getCookie(name) {
+    var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+    return r ? r[1] : undefined;
+}
+
+function check_reg() {
+    if ($("#reg_repwd").val() != $("#reg_password").val()) {
+        $("#err_info").text("Check password failed");
+        $("#err_container").removeClass("hidden");
+    } else {
+        $.ajax({url:'/register', data:{"email":$("#reg_email").val(), "nickname": $("#reg_nickname").val(), "password": $("#reg_password").val(), "_xsrf": getCookie("_xsrf")}, dataType: "json", type: "POST", success: function(response) {
+            if (response.success) {
+                window.location="/u/"+response.user_id+"/home";
+            } else {
+                $("#err_info").text(response.err_info);
+                $("#err_container").removeClass("hidden");
+            }
+        }});
+    }
+}
+</script>
+</body>
+</html>
