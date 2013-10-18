@@ -25,6 +25,6 @@ CREATE TABLE  todo (
   todo_closed_date datetime DEFAULT NULL,
   todo_category int(11) NOT NULL DEFAULT 0,
   todo_viewed int(11) NOT NULL DEFAULT 0,
-  todo_slug varchar(20) NOT NULL,
+  todo_slug varchar(40) NOT NULL,
   todo_updated_date datetime DEFAULT NULL
 )
