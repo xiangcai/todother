@@ -1,0 +1,10 @@
+<html>
+<body>
+{% block title %}{{ _('User Profile') }}{% end %}
+
+{% block body %}
+    <span>{{ escape(current_user.nickname) }}</span>
+    <a href='#'>{{ _('Edit') }}</a>
+{% end %}
+</body>
+</html>
