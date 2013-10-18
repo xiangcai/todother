@@ -11,6 +11,7 @@ from setting import settings, db
 
 from controller import main
 from controller import todo
+from controller import auth
 from controller import user
 
 handlers = [
@@ -18,6 +19,7 @@ handlers = [
     (r"/login", main.LoginHandler),
     (r"/logout", main.LogoutHandler),
     (r"/register", main.RegisterHandler),
+    (r"/profile", auth.AccountSettingHandler),
     (r"/todo_list", todo.TodoListHandler),
     (r"/todo/([^/]+)", todo.TodoHandler),
     (r"/todo_compose", todo.TodoComposeHandler),

@@ -1,7 +1,8 @@
 import tornado.web
 import tornado.escape
+import tornado.locale
 
-from auth import *
+from module.user import UserEntity
 
 class BaseHandler(tornado.web.RequestHandler):
     @property
@@ -20,4 +21,4 @@ class BaseHandler(tornado.web.RequestHandler):
     def get_user_locale(self):
         if (not self.current_user) or ("locale" not in self.current_user.prefs):
             return None
-        return self.current_user.prefs["locale"]
+        return tornado.locale.get(self.current_user.prefs["locale"])
