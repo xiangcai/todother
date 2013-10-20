@@ -1,10 +1,29 @@
 -- To create the database:
 --    CREATE DATABASE withme;
---    GRANT ALL PRIVILEGES ON withme.* to withme@localhost IDENTIFIED BY withme;
+--    GRANT ALL PRIVILEGES ON withme.* to 'withme'@'localhost' IDENTIFIED BY 'withme';
 --
 -- Then load the schema to create tables:
 --    mysql -u withme -pwithme withme < schema.sql
 
+SET SESSION storage_engine = "InnoDB";
+SET SESSION time_zone = "+8:00";
+ALTER DATABASE CHARACTER SET "utf8";
+
+DROP TABLE IF EXISTS auth_user;
+CREATE TABLE auth_user (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    user_id VARCHAR(12) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    mobile VARCHAR(11),
+    nickname VARCHAR(100) NOT NULL,
+    realname VARCHAR(100),
+    language VARCHAR(10) DEFAULT "zh_CN",
+    password BLOB NOT NULL,
+    user_level INT DEFAULT 0,
+    KEY (`user_id`),
+    KEY (`email`),
+    KEY (`mobile`)
+);
 
 DROP TABLE IF EXISTS todo;
 CREATE TABLE  todo (
