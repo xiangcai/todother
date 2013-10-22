@@ -42,25 +42,36 @@ class TodoComposeHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         id = self.get_argument("id", None)
+        action = self.get_argument("action", None)
+        if action:
+            print "action: "+action
         entry = None
         if id:
             entry = self.db.get("SELECT * FROM todo WHERE todo_id = %s", int(id))
-        self.render("todo_compose.html", entry=entry)
+        self.render("todo_compose.html", entry=entry,action=action)
     
     @tornado.web.authenticated
     def post(self):
         id = self.get_argument("id", None)
-        
+        action = self.get_argument("action", None)
         what = self.get_argument("what")
         
         when = self.get_argument("when")
         if id:
             entry = self.db.get("SELECT * FROM todo WHERE todo_id = %s", int(id))
             if not entry: raise tornado.web.HTTPError(404)
-            slug = entry.todo_slug
-            self.db.execute(
-                "UPDATE todo SET todo_what = %s, todo_when = %s, todo_updated_date=UTC_TIMESTAMP()"
-                "WHERE todo_id = %s", what, when, int(id))
+            if action=="update":
+                slug = entry.todo_slug
+                self.db.execute(
+                    "UPDATE todo SET todo_what = %s, todo_when = %s, todo_updated_date=UTC_TIMESTAMP()"
+                    "WHERE todo_id = %s", what, when, int(id))
+            elif action=="redo":
+                slug = str(uuid.uuid1())
+            
+                self.db.execute(
+                    "INSERT INTO todo (todo_user_id,todo_what,todo_when,todo_slug,todo_created_date,todo_updated_date)"
+                    "VALUES (%s,%s,%s,%s,UTC_TIMESTAMP(),UTC_TIMESTAMP())",
+                    self.current_user.user_id, what,when,slug)
         else:
             slug = str(uuid.uuid1())
             
@@ -71,7 +82,7 @@ class TodoComposeHandler(BaseHandler):
         self.redirect("/todo/" + slug)
 
 
-class TodoCompleteHandler(BaseHandler):
+class TodoChangeStatusHandler(BaseHandler):
     @tornado.web.authenticated
     def get(self):
         id = self.get_argument("id", None)
@@ -139,9 +150,9 @@ class TodoFindHandler(BaseHandler):
 
 
 class TodoAchieveListHandler(BaseHandler):
+    @tornado.web.authenticated
     def get(self):
         
         entries = self.db.query("SELECT * FROM todo WHERE todo_user_id = %s and todo_status = %s "
                                 "ORDER BY todo_created_date ", self.current_user.user_id,1)
         self.render("todo_achieve_list.html", entries=entries,title="My Achievement")
-

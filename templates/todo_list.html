@@ -9,8 +9,9 @@
   {% end %}
 
 
+
  <!-- Modal -->
-<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div id="dialogShare" name="dialogShare" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
     <h3 id="myModalLabel">Share Todo</h3>
@@ -30,11 +31,27 @@
       Friends only (only friends can see and join your Todo)
     </label>
     </p>
+
   </div>
   <div class="modal-footer">
     <a class="btn" data-dismiss="modal" aria-hidden="true">Close</a>
-    <a class="btn btn-primary" href="/todo_share?id={{ entry.todo_id }}&type=2">Share</a>
+    <a id="confirmShare" class="btn btn-primary" href="#" onclick="submitShare()">Share</a>
   </div>
 </div>
+
+<script type="text/javascript">
+function openShareDialog(id,linkA) {
+    $("#confirmShare").prop("todo_id",id);
+    linkA.click();
+}
+
+function submitShare(href) {
+    todo_id=$("#confirmShare").prop("todo_id");
+    todo_type=$("input[name='shareOptions']:checked").val();
+    window.location="/todo_share?id="+todo_id+"&type="+todo_type;
+}
+
+</script>
+
 {% end %}
 

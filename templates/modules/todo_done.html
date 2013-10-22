@@ -12,6 +12,7 @@
   </div>
   <div class="body">{%raw entry.todo_what %}  {% raw entry.todo_when %}</div>
   {% if current_user %}
-    
+      <div class="btn"><a href="/todo_status?id={{ entry.todo_id }}&status=0">{{ _("Continue Todo") }}</a></div>
+      <div class="btn"><a href="/todo_compose?id={{ entry.todo_id }}&action=redo">{{ _("Redo Todo") }}</a></div>
   {% end %}
 </div>
