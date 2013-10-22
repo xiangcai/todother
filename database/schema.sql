@@ -13,6 +13,7 @@ DROP TABLE IF EXISTS auth_user;
 CREATE TABLE auth_user (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     user_id VARCHAR(12) NOT NULL UNIQUE,
+    gender VARCHAR(10),
     email VARCHAR(100) NOT NULL UNIQUE,
     mobile VARCHAR(11),
     nickname VARCHAR(100) NOT NULL,
