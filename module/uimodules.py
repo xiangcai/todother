@@ -8,6 +8,10 @@ class TodoModule(tornado.web.UIModule):
     def render(self, entry):
         return self.render_string("modules/todo.html", entry=entry)
 
+class TodoDoneModule(tornado.web.UIModule):
+    def render(self, entry):
+        return self.render_string("modules/todo_done.html", entry=entry)
+
 class TodoMatchModule(tornado.web.UIModule):
     def render(self, entry):
         return self.render_string("modules/todo_match.html", entry=entry)

@@ -22,8 +22,12 @@ handlers = [
     (r"/profile", auth.AccountSettingHandler),
     (r"/todo_list", todo.TodoListHandler),
     (r"/todo/([^/]+)", todo.TodoHandler),
+    (r"/todo_done/([^/]+)", todo.TodoDoneHandler),
     (r"/todo_compose", todo.TodoComposeHandler),
     (r"/todo_find", todo.TodoFindHandler),
+    (r"/todo_done", todo.TodoCompleteHandler),
+    (r"/todo_share", todo.TodoShareHandler),
+    (r"/todo_achieve_list", todo.TodoAchieveListHandler),
     (r"/u/(.*)/home", user.HomeHandler),
     ]
 

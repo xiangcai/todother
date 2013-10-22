@@ -12,5 +12,6 @@ class HomeHandler(BaseHandler):
     def get(self, username):
         self.write('<html><body>Welcome back ' + self.current_user.nickname +
                    '<a href="/todo_list">My Todo</a> '
+                   '<a href="/todo_achieve_list">My Achievement</a> '
                    '<a href="/logout">Logout</a></body></html>')
 

@@ -8,7 +8,15 @@
 "Save changes", 修改Todo
 "Publish post", 创建Todo
 "Cancel", 取消
-"Edit this Todo", 编辑Todo
+"Edit Todo", 编辑Todo
+"Complete Todo", 完成Todo
+"Share Todo", 分享Todo
 "Back", 返回
+"My Todo", 我的Todo
+"My Achievement",我的成就
 "New Todo", 新建Todo
-
+"Find Todo", 寻找Todo
+"Todo Type", Todo类型
+"Todo Type Public", 公开
+"Todo Type Friends", 朋友可见
+"Todo Type Private", 私有

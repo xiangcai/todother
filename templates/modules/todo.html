@@ -1,9 +1,31 @@
+
+
 <div class="entry">
   <h1><a href="/todo/{{ entry.todo_slug }}">{{ entry.todo_slug }}</a></h1>
-  <div class="date">{{ entry.todo_created_date }}</div>
+  {{ _("Created in") }}<div class="date">{{ entry.todo_created_date }}</div>
+  {{ _("Todo Type") }}<div class="date">
+    {% if entry.todo_type == 2  %}
+            {{_("Todo Type Public")}}
+      {% elif entry.todo_type == 3  %}
+          {{_("Todo Type Friends")}}
+      {% else %}
+           {{_("Todo Type Private")}}
+    {% end  %}       
+  </div>
   <div class="body">{%raw entry.todo_what %}  {% raw entry.todo_when %}</div>
   {% if current_user %}
-    <div class="admin"><a href="/todo_compose?id={{ entry.todo_id }}">{{ _("Edit this Todo") }}</a></div>
-    <div class="admin"><a href="/todo_find?id={{ entry.todo_id }}">{{ _("Find Todo") }}</a></div>
+    
+    <div class="btn"><a href="/todo_done?id={{ entry.todo_id }}&status=1">{{ _("Complete Todo") }}</a></div>
+    {% if entry.todo_type == 2 or entry.todo_type == 3 %}
+      <div class="btn"><a href="/todo_done?id={{ entry.todo_id }}&status=3">{{ _("Give up Todo") }}</a></div>
+     {% else %}
+     <div class="btn"><a href="/todo_compose?id={{ entry.todo_id }}">{{ _("Edit Todo") }}</a></div>
+     <div class="btn"><a href="#myModal" role="button" data-toggle="modal">{{ _("Share Todo") }}</a></div>
+     {% end  %}
+    <div class="btn"><a href="/todo_find?id={{ entry.todo_id }}">{{ _("Find Todo") }}</a></div>
   {% end %}
+
+  
 </div>
+
+

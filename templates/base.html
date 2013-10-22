@@ -2,6 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/> 
+    <script type="text/javascript" src="static/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="static/js/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" href="static/css/bootstrap.css" type="text/css">
   </head>
   <body>
     <div id="body">
@@ -9,6 +12,8 @@
         <div style="float:right">
           {% if current_user %}
             <a href="/todo_compose">{{ _('New Todo') }}</a> -
+             <a href="/todo_list">{{ _('My Todo') }}</a> -
+              <a href="/todo_achieve_list">{{ _('My Achievement') }}</a> -
             <a href="/logout?next={{ url_escape(request.uri) }}">{{ _('Sign out') }}</a>
           {% else %}
             {% raw _('<a href="%(url)s">Sign in</a> to compose/edit') % {"url": "/login?next=" + url_escape(request.uri)} %}

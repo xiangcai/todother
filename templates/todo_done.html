@@ -1,0 +1,6 @@
+{% extends "base.html" %}
+
+{% block body %}
+  {% module TodoDoneModule(entry) %}
+   <div class="admin"><a href="/todo_achieve_list">{{ _("Back") }}</a></div>
+{% end %}
