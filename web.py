@@ -24,6 +24,8 @@ handlers = [
     (r"/todo/([^/]+)", todo.TodoHandler),
     (r"/todo_done/([^/]+)", todo.TodoDoneHandler),
     (r"/todo_compose", todo.TodoComposeHandler),
+    (r"/todo_del", todo.TodoDeleteHandler),
+    (r"/todo_giveup_list", todo.TodoGiveupListHandler),
     (r"/todo_find", todo.TodoFindHandler),
     (r"/todo_status", todo.TodoChangeStatusHandler),
     (r"/todo_share", todo.TodoShareHandler),

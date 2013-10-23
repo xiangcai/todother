@@ -17,11 +17,12 @@
     
     <div class="btn"><a href="/todo_done?id={{ entry.todo_id }}&status=1">{{ _("Complete Todo") }}</a></div>
     {% if entry.todo_type == 2 or entry.todo_type == 3 %}
-      <div class="btn"><a href="/todo_status?id={{ entry.todo_id }}&status=3">{{ _("Give up Todo") }}</a></div>
+       <div class="btn"><a href="/todo_status?id={{ entry.todo_id }}&status=2">{{ _("Give up Todo") }}</a></div>
      {% else %}
-     <div class="btn"><a href="/todo_compose?id={{ entry.todo_id }}&action=update">{{ _("Edit Todo") }}</a></div>
-     <a id="shareLink" href="#dialogShare" role="button" data-toggle="modal" style="display:none">{{ _("Share Todo") }}</a>
-      <div class="btn"><a onclick="openShareDialog({{ entry.todo_id }},$('#shareLink'))">{{ _("Share Todo") }}</a></div>
+       <!--<div class="btn"><a href="/todo_compose?id={{ entry.todo_id }}&action=update">{{ _("Edit Todo") }}</a></div>-->
+       <a id="shareLink" href="#dialogShare" role="button" data-toggle="modal" style="display:none"></a>
+       <div class="btn"><a onclick="openShareDialog({{ entry.todo_id }},$('#shareLink'))">{{ _("Share Todo") }}</a></div>
+       <div class="btn"><a href="/todo_del?id={{ entry.todo_id }}">{{ _("Remove Todo") }}</a></div>
      {% end  %}
     <div class="btn"><a href="/todo_find?id={{ entry.todo_id }}">{{ _("Find Todo") }}</a></div>
   {% end %}

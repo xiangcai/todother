@@ -37,6 +37,14 @@ class TodoDoneHandler(BaseHandler):
         if not entry: raise tornado.web.HTTPError(404)
         self.render("todo_done.html", entry=entry)
 
+class TodoDeleteHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        id = self.get_argument("id", None)
+        
+        if id:
+            entry = self.db.execute("DELETE FROM todo WHERE todo_id = %s", int(id))
+        self.redirect("/todo_list")
 
 class TodoComposeHandler(BaseHandler):
     @tornado.web.authenticated
@@ -103,7 +111,7 @@ class TodoShareHandler(BaseHandler):
         entry = None
         if id and type:
             self.db.execute("UPDATE todo SET todo_type = %s,todo_updated_date=UTC_TIMESTAMP() WHERE todo_id = %s", type,id)
-        self.redirect("todo_list")
+        self.redirect("/todo_list")
 
 
 class TodoFindHandler(BaseHandler):
@@ -156,3 +164,12 @@ class TodoAchieveListHandler(BaseHandler):
         entries = self.db.query("SELECT * FROM todo WHERE todo_user_id = %s and todo_status = %s "
                                 "ORDER BY todo_created_date ", self.current_user.user_id,1)
         self.render("todo_achieve_list.html", entries=entries,title="My Achievement")
+
+
+class TodoGiveupListHandler(BaseHandler):
+    @tornado.web.authenticated
+    def get(self):
+        
+        entries = self.db.query("SELECT * FROM todo WHERE todo_user_id = %s and todo_status = %s "
+                                "ORDER BY todo_created_date ", self.current_user.user_id,2)
+        self.render("todo_giveup_list.html", entries=entries,title="My Giveup")

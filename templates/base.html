@@ -11,9 +11,10 @@
       <div id="header">
         <div style="float:right">
           {% if current_user %}
-            <a href="/todo_compose">{{ _('New Todo') }}</a> -
+             <a href="/todo_compose">{{ _('New Todo') }}</a> -
              <a href="/todo_list">{{ _('My Todo') }}</a> -
-              <a href="/todo_achieve_list">{{ _('My Achievement') }}</a> -
+             <a href="/todo_achieve_list">{{ _('My Achievement') }}</a> -
+             <a href="/todo_giveup_list">{{ _('My Giveup') }}</a> -
             <a href="/logout?next={{ url_escape(request.uri) }}">{{ _('Sign out') }}</a>
           {% else %}
             {% raw _('<a href="%(url)s">Sign in</a> to compose/edit') % {"url": "/login?next=" + url_escape(request.uri)} %}

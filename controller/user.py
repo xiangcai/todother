@@ -13,5 +13,6 @@ class HomeHandler(BaseHandler):
         self.write('<html><body>Welcome back ' + self.current_user.nickname +
                    '<a href="/todo_list">My Todo</a> '
                    '<a href="/todo_achieve_list">My Achievement</a> '
+                   '<a href="/todo_giveup_list">My Giveup</a> '
                    '<a href="/logout">Logout</a></body></html>')
 

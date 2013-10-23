@@ -12,6 +12,11 @@ class TodoDoneModule(tornado.web.UIModule):
     def render(self, entry):
         return self.render_string("modules/todo_done.html", entry=entry)
 
+class TodoGiveupModule(tornado.web.UIModule):
+    def render(self, entry):
+        return self.render_string("modules/todo_giveup.html", entry=entry)
+        
+
 class TodoMatchModule(tornado.web.UIModule):
     def render(self, entry):
         return self.render_string("modules/todo_match.html", entry=entry)
