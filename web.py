@@ -13,6 +13,7 @@ from controller import main
 from controller import todo
 from controller import auth
 from controller import user
+from controller import update
 
 handlers = [
     (r"/", main.MainHandler),
@@ -31,6 +32,8 @@ handlers = [
     (r"/todo_share", todo.TodoShareHandler),
     (r"/todo_achieve_list", todo.TodoAchieveListHandler),
     (r"/u/(.*)/home", user.HomeHandler),
+    (r"/todo/([^/]+)/update", update.UpdateHandler),
+    (r"/todo/([^/]+)/story", update.StoryHandler),
     ]
 
 if __name__ == "__main__":

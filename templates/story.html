@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block body %}
+<div>
+  <div style="display: block; position: fixed">
+    {% module Template("modules/story_line.html", times=times) %}
+  </div>
+  <div style="margin-left: 200px; float: left; width: 500px;">
+    {% for update in updates %}
+      {% module UpdateEntry(update) %}
+    {% end %}
+  </div>
+</div>
+{% end %}

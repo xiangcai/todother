@@ -36,3 +36,8 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+
+# backup files
+.old
+.org
+.new

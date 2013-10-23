@@ -1,0 +1,9 @@
+<dl style="width: 200px; display: block; top: 20px;">
+  {% for time in times %}
+    <dd id="timeline-{{ time }}">
+      <a href="#{{ time }}">{{ time }}</a>
+      <span class="timeline-dot"></span>
+    </dd>
+  {% end %}
+</dl>
+

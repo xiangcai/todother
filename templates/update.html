@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <script type="text/javascript" src="/static/js/jquery-1.10.2.min.js"></script>
+    <link rel="stylesheet" href="/static/css/bootstrap.css" type="text/css">
+  </head>
+  <body>
+    <div>
+      <div class="update_title">{{ _("What's new update?") }}</div>
+      <div style="display: none;">
+        <input type="TEXT" id="todo_id" value="{{ todo_id }}"/>
+      </div>
+      <div class="update_input">
+        <textarea class="update_detail" title="{{ _('Update detail') }}" id="input_update_detail" name="update_detail" style="margin: 2px 0px 0px 2px; word-wrap: break-word; width: 512px; height: 80px;">
+        </textarea>
+        <div class="update_success" style="display: none">
+          <p>{{ _('Update success') }}</p>
+        </div>
+      </div>
+      <div class="update_operation">
+        <div class="oper_attached">
+          <a class="atta_smiley" href="#">{{ _('Smiley') }}</a>
+          <a class="atta_pic" href="#">{{ _('Picture') }}</a>
+          <a class="atta_voice" href="#">{{ _('Voice') }}</a>
+        </div>
+        <a href="javascript:void(0);" onclick="javascript:submit_update();" class="btn update_btn" style="float: right">{{ _("Send Update") }}</a>
+      </div>
+      <script>
+        function getCookie(name) {
+            var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+            return r ? r[1] : undefined;
+        }
+
+        function submit_update() {
+            $.ajax({url:'/todo/' + $("#todo_id").val() + '/update',
+              data:{"detail":$("#input_update_detail").val(), "_xsrf": getCookie("_xsrf")},
+              dataType: "json",
+              type: "POST",
+              success: function(response) { window.location="/todo/" + $("#todo_id").val() + "/story"}});
+        }
+      </script>
+    </div>
+</body>
+</html>

@@ -52,3 +52,8 @@ class PageMudule(tornado.web.UIModule):
        
         return self.render_string('modules/page.html', page=page, pages=pages, next=next,
             previous=previous, get_page_url=get_page_url)
+
+class UpdateEntry(tornado.web.UIModule):
+    def render(self, entry, show_comments=False):
+        return self.render_string("modules/update_entry.html", entry=entry, show_comments=show_comments)
+

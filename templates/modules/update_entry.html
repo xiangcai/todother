@@ -1,0 +1,15 @@
+<div class="update_info" id="{{ entry.update_time }}" style="margin-top: 20px; margin-bottom: 20px;">
+  <a href="{{ '/update/%d' % entry.id }}">{{ entry.update_time }}</a>
+  <div class="update_text">{{ entry.detail_text }}</div>
+  <div class="update_postfix">
+    <div class="update_pic_list">
+      <ul class="pic_list"></ul>
+    </div>
+    <div class="update_media_list"></div>
+    <div class="update_func" style="text-align: right;">
+      <a href="javascript:void(0);" onclick="get_test();">{{ _("Cheer") }}</a>
+      <a href="javascript:void(0);">{{ _("Comment") }}</a>
+    </div>
+  </div>
+</div>
+

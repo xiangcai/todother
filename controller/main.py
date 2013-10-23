@@ -16,7 +16,7 @@ from module.services import randId
 
 class RegisterHandler(BaseHandler):
     def get(self):
-        self.render("register.html", title="Register WithME")
+        self.render("sign-up.html", title="Register WithME")
 
     def post(self):
         email = self.get_argument("email")
@@ -38,12 +38,13 @@ class RegisterHandler(BaseHandler):
 
 class LoginHandler(BaseHandler):
     def get(self):
-        self.write('<html><body><form action="/login" method="post">' +
-                   self.xsrf_form_html() +
-                   'Email: <input type="text" name="email">'
-                   'Password: <input type="password" name="password">'
-                   '<input type="submit" value="Login">'
-                   '</form><a href="/register">Register</a></body></html>')
+        self.render("login.html")
+        #self.write('<html><body><form action="/login" method="post">' +
+        #           self.xsrf_form_html() +
+        #           'Email: <input type="text" name="email">'
+        #           'Password: <input type="password" name="password">'
+        #           '<input type="submit" value="Login">'
+        #           '</form><a href="/register">Register</a></body></html>')
 
     def post(self):
         email = self.get_argument("email")
@@ -66,10 +67,14 @@ class LogoutHandler(BaseHandler):
 
 class MainHandler(BaseHandler):
     def get(self):
-        self.write('<html><body><form action="/login" method="post">'
-                   + self.xsrf_form_html() +
-                   'Email: <input type="text" name="email">'
-                   'Password: <input type="password" name="password">'
-                   '<input type="submit" value="Login">'
-                   '</form><a href="/register">Register</a></body></html>')
+        if not self.current_user:
+            self.redirect("/login")
+            return
+        self.redirect('/u/%s/home' % self.current_user.user_id)
+        #self.write('<html><body><form action="/login" method="post">'
+        #           + self.xsrf_form_html() +
+        #           'Email: <input type="text" name="email">'
+        #           'Password: <input type="password" name="password">'
+        #           '<input type="submit" value="Login">'
+        #           '</form><a href="/register">Register</a></body></html>')
 
