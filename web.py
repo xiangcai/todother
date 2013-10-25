@@ -32,6 +32,7 @@ handlers = [
     (r"/todo_status", todo.TodoChangeStatusHandler),
     (r"/todo_share", todo.TodoShareHandler),
     (r"/todo_achieve_list", todo.TodoAchieveListHandler),
+    (r"/todo_whatsnew", todo.TodoRandomJsonHandler),
     (r"/u/(.*)/home", user.HomeHandler),
     (r"/todo/([^/]+)/update", update.UpdateHandler),
     (r"/todo/([^/]+)/story", update.StoryHandler),

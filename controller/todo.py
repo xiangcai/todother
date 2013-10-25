@@ -3,6 +3,9 @@ import sys
 import logging
 import uuid
 
+import json
+import string
+
 import tornado.web
 import tornado.escape
 import urlparse
@@ -186,3 +189,13 @@ class TodoGiveupListHandler(BaseHandler):
         entries = self.db.query("SELECT * FROM todo WHERE todo_user_id = %s and todo_status = %s "
                                 "ORDER BY todo_created_date ", self.current_user.user_id,2)
         self.render("todo_giveup_list.html", entries=entries,title="My Giveup")
+
+class TodoRandomJsonHandler(BaseHandler):
+    def get(self):
+        total = 100
+        #TODO filter out the user self's todo
+        entries = self.db.query("SELECT * FROM todo WHERE todo_user_id = %s and todo_status = %s "
+                                "ORDER BY todo_created_date LIMIT %s", self.current_user.user_id,0,total)
+        json = tornado.escape.json_encode(entries)
+        self.render("todo_whatsnew.html", json=json,title="What's New")
+
