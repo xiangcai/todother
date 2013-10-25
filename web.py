@@ -14,6 +14,7 @@ from controller import todo
 from controller import auth
 from controller import user
 from controller import update
+from controller import img
 
 handlers = [
     (r"/", main.MainHandler),
@@ -34,6 +35,8 @@ handlers = [
     (r"/u/(.*)/home", user.HomeHandler),
     (r"/todo/([^/]+)/update", update.UpdateHandler),
     (r"/todo/([^/]+)/story", update.StoryHandler),
+    (r"/img/upload", img.UploadHandler),
+    (r"/img/(.*)/delete", img.DeleteHandler),
     ]
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
 {% block body %}
-  {% module TodoModule(entry) %}
+  {% module TodoModule(entry, updates=updates, times=times) %}
    <div class="admin"><a href="/todo_list">{{ _("Back") }}</a></div>
 {% end %}

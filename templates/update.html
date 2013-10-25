@@ -19,10 +19,17 @@
       <div class="update_operation">
         <div class="oper_attached">
           <a class="atta_smiley" href="#">{{ _('Smiley') }}</a>
-          <a class="atta_pic" href="#">{{ _('Picture') }}</a>
+          <a class="atta_pic" href="javascript:void(0);" onclick="javascript:toggle_selector();">{{ _('Picture') }}</a>
           <a class="atta_voice" href="#">{{ _('Voice') }}</a>
         </div>
         <a href="javascript:void(0);" onclick="javascript:submit_update();" class="btn update_btn" style="float: right">{{ _("Send Update") }}</a>
+        <div class="hidden" id="pic_selector">
+          <form id="form_upload" action="/img/upload" method="POST" enctype="multipart/form-data">
+            {% module xsrf_form_html() %}
+            <input type="FILE" id="pic1" name="postfile" onchange="upload_pic();"/>
+            <input type="SUBMIT" style="display: none;"/>
+          </form>
+        </div>
       </div>
       <script>
         function getCookie(name) {
@@ -37,6 +44,19 @@
               type: "POST",
               success: function(response) { window.location="/todo/" + $("#todo_id").val() + "/story"}});
         }
+
+        function toggle_selector() {
+            if ($("#pic_selector").hasClass("hidden")) {
+                $("#pic_selector").removeClass("hidden");
+            } else {
+                $("#pic_selector").addClass("hidden");
+                $("#pic1").val('');
+            }
+        }
+
+        function upload_pic() {
+            $("#form_upload").submit();
+          }
       </script>
     </div>
 </body>

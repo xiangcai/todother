@@ -14,7 +14,40 @@
   </div>
   <div class="body">{%raw entry.todo_what %}  {% raw entry.todo_when %}</div>
   {% if current_user %}
-    
+
+    <div style="margin-top: 10px; margin-bottom: 10px;">
+      <div class="update_title">{{ _("What's new update?") }}</div>
+      <div class="update_input">
+        <textarea class="update_detail" title="{{ _('Update detail') }}" id="input_update_detail" name="update_detail" style="margin: 2px 0px 0px 2px; word-wrap: break-word; width: 512px; height: 80px;">
+        </textarea>
+        <div class="update_success" style="display: none">
+          <p>{{ _('Update success') }}</p>
+        </div>
+      </div>
+      <div class="update_operation" style="width: 510px;">
+        <div class="oper_attached" style="width: 350px; float: left">
+          <a class="atta_smiley" href="#">{{ _('Smiley') }}</a>
+          <a class="atta_pic" href="javascript:void(0);" onclick="javascript:toggle_selector();">{{ _('Picture') }}</a>
+          <a class="atta_voice" href="#">{{ _('Voice') }}</a>
+        </div>
+        <a href="javascript:void(0);" onclick="submit_update({{ entry.todo_id }});" class="btn btn-primary" style="float: right">{{ _("Send Update") }}</a>
+      </div>
+      <script>
+        function getCookie(name) {
+            var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+            return r ? r[1] : undefined;
+        }
+ 
+        function submit_update(todo_id) {
+          if ($("#input_update_detail").val() == "") return;
+          $.ajax({url:'/todo/' + todo_id + '/update',
+                    data:{"detail":$("#input_update_detail").val(), "_xsrf": getCookie("_xsrf")},
+                    dataType: "json",
+                    type: "POST",
+                    success: function(response) { window.location="/todo/{{ entry.todo_slug }}";}});
+        }
+      </script>
+    </div>
     <div class="btn"><a href="/todo_done?id={{ entry.todo_id }}&status=1">{{ _("Complete Todo") }}</a></div>
     {% if entry.todo_type == 2 or entry.todo_type == 3 %}
        <div class="btn"><a href="/todo_status?id={{ entry.todo_id }}&status=2">{{ _("Give up Todo") }}</a></div>
@@ -27,7 +60,18 @@
     <div class="btn"><a href="/todo_find?id={{ entry.todo_id }}">{{ _("Find Todo") }}</a></div>
   {% end %}
 
-  
+  <hr/>
+  <div style="margin-top: 10px;">
+    <div style="display: block; position: fixed">
+      {% module Template("modules/story_line.html", times=times) %}
+    </div>
+    <div style="margin-left: 200px; float: left; width: 500px;">
+      {% for update in updates %}
+        {% module UpdateEntry(update) %}
+      {% end %}
+    </div>
+  </div>
+
 </div>
 
 

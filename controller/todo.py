@@ -29,8 +29,21 @@ class TodoHandler(BaseHandler):
     def get(self, slug):
         entry = self.db.get("SELECT * FROM todo WHERE todo_slug = %s", slug)
         if not entry: raise tornado.web.HTTPError(404)
-        self.render("todo.html", entry=entry)
-    
+
+        count = self.db.get('select count(*) from todo_update where todo_id=%s' % entry.todo_id)
+        if count == 0:
+            updates = None
+        elif count > 5:
+            updates = self.db.query('select * from todo_update where todo_id=%s order by update_time desc limit 5' % entry.todo_id)
+        else:
+            updates = self.db.query('select * from todo_update where todo_id=%s order by update_time desc' % entry.todo_id)
+        times = []
+        if updates:
+            for update in updates:
+                times.append(update.update_time)
+
+        self.render("todo.html", entry=entry, updates=updates, times=times)
+
 class TodoDoneHandler(BaseHandler):
     def get(self, slug):
         entry = self.db.get("SELECT * FROM todo WHERE todo_slug = %s", slug)
