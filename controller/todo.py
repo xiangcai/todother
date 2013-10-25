@@ -42,7 +42,7 @@ class TodoHandler(BaseHandler):
             for update in updates:
                 times.append(update.update_time)
 
-        self.render("todo.html", entry=entry, updates=updates, times=times)
+        self.render("todo.html", entry=entry, updates=updates, times=times, with_update=True)
 
 class TodoDoneHandler(BaseHandler):
     def get(self, slug):

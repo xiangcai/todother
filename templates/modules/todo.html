@@ -14,7 +14,7 @@
   </div>
   <div class="body">{%raw entry.todo_what %}  {% raw entry.todo_when %}</div>
   {% if current_user %}
-
+    {% if with_update %}
     <div style="margin-top: 10px; margin-bottom: 10px;">
       <div class="update_title">{{ _("What's new update?") }}</div>
       <div class="update_input">
@@ -48,6 +48,7 @@
         }
       </script>
     </div>
+    {% end %}
     <div class="btn"><a href="/todo_done?id={{ entry.todo_id }}&status=1">{{ _("Complete Todo") }}</a></div>
     {% if entry.todo_type == 2 or entry.todo_type == 3 %}
        <div class="btn"><a href="/todo_status?id={{ entry.todo_id }}&status=2">{{ _("Give up Todo") }}</a></div>
@@ -62,6 +63,7 @@
 
   <hr/>
   <div style="margin-top: 10px;">
+    {% if with_update and updates and times %}
     <div style="display: block; position: fixed">
       {% module Template("modules/story_line.html", times=times) %}
     </div>
@@ -70,6 +72,7 @@
         {% module UpdateEntry(update) %}
       {% end %}
     </div>
+    {% end %}
   </div>
 
 </div>

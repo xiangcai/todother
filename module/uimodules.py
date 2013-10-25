@@ -5,8 +5,11 @@ import urllib
 import tornado.web
 
 class TodoModule(tornado.web.UIModule):
-    def render(self, entry, updates, times):
-        return self.render_string("modules/todo.html", entry=entry, updates=updates, times=times)
+    def render(self, entry, updates=None, times=None, with_update=False):
+        if not with_update:
+            return self.render_string("modules/todo.html", entry=entry, updates=None, times=None, with_update=False)
+        else:
+            return self.render_string("modules/todo.html", entry=entry, updates=updates, times=times, with_update=True)
 
 class TodoDoneModule(tornado.web.UIModule):
     def render(self, entry):
