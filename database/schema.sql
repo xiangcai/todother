@@ -48,3 +48,17 @@ CREATE TABLE  todo (
   todo_slug varchar(40) NOT NULL,
   todo_updated_date datetime
 )
+
+DROP TABLE IF EXISTS todo_update;
+CREATE TABLE todo_update (
+    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    todo_id int(11) NOT NULL,
+    user_id VARCHAR(12) NOT NULL,
+    detail_text TEXT,
+    update_time DATETIME,
+    attach_pic_1 VARCHAR(255),
+    attach_pic_2 VARCHAR(255),
+    attach_pic_3 VARCHAR(255),
+    KEY (`todo_id`)
+);
+
