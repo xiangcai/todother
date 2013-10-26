@@ -3,7 +3,7 @@ import sys
 import random
 import string
 import time
-import Image
+from PIL import Image
 
 import tornado.web
 import tornado.escape
@@ -15,27 +15,28 @@ from controller.base import *
 class UploadHandler(BaseHandler):
     def post(self):
         result = {'success': True}
+        dirname = '/home/yli/uploads'
         if self.request.files:
             try:
                 upload_img = self.request.files['postfile'][0]
                 rawname = upload_img['filename']
                 destname = '%d%s' % (time.time(), ''.join(random.choice(string.ascii_lowercase + string.digits) for x in range(6)))
                 thumbname = 'thumb_%s' % destname
-                path = '/home/yli/uploads/%s/pics/' % self.current_user.user_id
+                path = '%s/%s/pics/' % (dirname, self.current_user.user_id)
                 if not os.path.exists(path):
                     os.makedirs(path)
                 extension = os.path.splitext(rawname)[1]
-                destname = ''.join(path, destname, extension)
+                destname = ''.join((path, destname, extension))
                 output_img = open(destname, 'w')
                 output_img.write(upload_img['body'])
                 output_img.close()
 
                 oimg = Image.open(destname)
                 oimg.thumbnail((160, 160), resample=1)
-                thumbname = ''.join(path, thumbname, extension)
+                thumbname = ''.join((path, thumbname, extension))
                 oimg.save(thumbname)
-                result['thumbname'] = thumbname
-                result['filename'] = destname
+                result['thumbname'] = thumbname[len(dirname):]
+                result['filename'] = destname[len(dirname):]
             except Exception, e:
                 app_log.error(str(e))
                 result['success'] = False

@@ -38,6 +38,7 @@ handlers = [
     (r"/todo/([^/]+)/story", update.StoryHandler),
     (r"/img/upload", img.UploadHandler),
     (r"/img/(.*)/delete", img.DeleteHandler),
+    (r"/img/(.*)", img.FileHandler),
     ]
 
 if __name__ == "__main__":

@@ -14,6 +14,16 @@
   </div>
   <div class="body">{%raw entry.todo_what %}  {% raw entry.todo_when %}</div>
   {% if current_user %}
+    <div class="btn"><a href="/todo_done?id={{ entry.todo_id }}&status=1">{{ _("Complete Todo") }}</a></div>
+    {% if entry.todo_type == 2 or entry.todo_type == 3 %}
+       <div class="btn"><a href="/todo_status?id={{ entry.todo_id }}&status=2">{{ _("Give up Todo") }}</a></div>
+    {% else %}
+       <!--<div class="btn"><a href="/todo_compose?id={{ entry.todo_id }}&action=update">{{ _("Edit Todo") }}</a></div>-->
+       <a id="shareLink" href="#dialogShare" role="button" data-toggle="modal" style="display:none"></a>
+       <div class="btn"><a onclick="openShareDialog({{ entry.todo_id }},$('#shareLink'))">{{ _("Share Todo") }}</a></div>
+       <div class="btn"><a href="/todo_del?id={{ entry.todo_id }}">{{ _("Remove Todo") }}</a></div>
+    {% end  %}
+    <div class="btn"><a href="/todo_find?id={{ entry.todo_id }}">{{ _("Find Todo") }}</a></div>
     {% if with_update %}
     <div style="margin-top: 10px; margin-bottom: 10px;">
       <div class="update_title">{{ _("What's new update?") }}</div>
@@ -31,8 +41,28 @@
           <a class="atta_voice" href="#">{{ _('Voice') }}</a>
         </div>
         <a href="javascript:void(0);" onclick="submit_update({{ entry.todo_id }});" class="btn btn-primary" style="float: right">{{ _("Send Update") }}</a>
+        <div class="hidden" id="pic_selector" style="float: left;">
+          <form id="form_upload" action="/img/upload" method="POST" target="upload_ret" enctype="multipart/form-data">
+            {% module xsrf_form_html() %}
+            <input type="FILE" id="pic1" name="postfile" onchange="upload_pic();"/>
+            <input type="SUBMIT" style="display: none;"/>
+          </form>
+          <iframe id="upload_ret" name="upload_ret" src="" style="display: none;" onload="uploadDone();"></iframe>
+        </div>
+        <div class="hidden" id="pic_container"></div>
       </div>
       <script>
+        function uploadDone() {
+            var ret = frames['upload_ret'].document.getElementsByTagName("body")[0].innerHTML;
+            var ret_data = eval("(" + ret + ")");
+            if (ret_data.success) {
+                $("#pic_container").append("<img src='/img" + ret_data.thumbname + "'/>");
+                $("#pic_container").removeClass("hidden");
+            } else {
+                alert("Upload failed: " + ret_data.err_info);
+            }
+        }
+
         function getCookie(name) {
             var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
             return r ? r[1] : undefined;
@@ -46,19 +76,22 @@
                     type: "POST",
                     success: function(response) { window.location="/todo/{{ entry.todo_slug }}";}});
         }
+
+        function toggle_selector() {
+            if ($("#pic_selector").hasClass("hidden")) {
+                $("#pic_selector").removeClass("hidden");
+            } else {
+                $("#pic_selector").addClass("hidden");
+                $("#pic1").val('');
+            }
+        }
+ 
+        function upload_pic() {
+            $("#form_upload").submit();
+        }
       </script>
     </div>
     {% end %}
-    <div class="btn"><a href="/todo_done?id={{ entry.todo_id }}&status=1">{{ _("Complete Todo") }}</a></div>
-    {% if entry.todo_type == 2 or entry.todo_type == 3 %}
-       <div class="btn"><a href="/todo_status?id={{ entry.todo_id }}&status=2">{{ _("Give up Todo") }}</a></div>
-     {% else %}
-       <!--<div class="btn"><a href="/todo_compose?id={{ entry.todo_id }}&action=update">{{ _("Edit Todo") }}</a></div>-->
-       <a id="shareLink" href="#dialogShare" role="button" data-toggle="modal" style="display:none"></a>
-       <div class="btn"><a onclick="openShareDialog({{ entry.todo_id }},$('#shareLink'))">{{ _("Share Todo") }}</a></div>
-       <div class="btn"><a href="/todo_del?id={{ entry.todo_id }}">{{ _("Remove Todo") }}</a></div>
-     {% end  %}
-    <div class="btn"><a href="/todo_find?id={{ entry.todo_id }}">{{ _("Find Todo") }}</a></div>
   {% end %}
 
   <hr/>
