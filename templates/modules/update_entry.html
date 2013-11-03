@@ -3,7 +3,11 @@
   <div class="update_text">{{ entry.detail_text }}</div>
   <div class="update_postfix">
     <div class="update_pic_list">
-      <ul class="pic_list"></ul>
+      <ul class="pic_list">
+        {% if entry.attach_pic_1 %}
+        <img src="/img{{ entry.attach_pic_1 }}"/>
+        {% end %}
+      </ul>
     </div>
     <div class="update_media_list"></div>
     <div class="update_func" style="text-align: right;">

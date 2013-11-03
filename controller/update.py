@@ -18,7 +18,8 @@ class UpdateHandler(BaseHandler):
 
     def post(self, todo_id):
         detail = self.get_argument("detail")
-        self.db.execute('insert into todo_update (todo_id, user_id, detail_text, update_time) values ("%s", "%s", "%s", UTC_TIMESTAMP())' % (todo_id, self.current_user.user_id, detail))
+        pic1 = self.get_argument("pic1")
+        self.db.execute('insert into todo_update (todo_id, user_id, detail_text, update_time, attach_pic_1) values ("%s", "%s", "%s", UTC_TIMESTAMP(), "%s")' % (todo_id, self.current_user.user_id, detail, pic1))
         #redirect('/todo/%s/story' % todo_id)
         self.write(tornado.escape.json_encode({"success": True}))
 
