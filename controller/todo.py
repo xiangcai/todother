@@ -78,6 +78,7 @@ class TodoComposeHandler(BaseHandler):
     def post(self):
         id = self.get_argument("id", None)
         action = self.get_argument("action", None)
+        category = self.get_argument("category", 0)
         what = self.get_argument("what")
         
         when = self.get_argument("when")
@@ -87,22 +88,22 @@ class TodoComposeHandler(BaseHandler):
             if action=="update":
                 slug = entry.todo_slug
                 self.db.execute(
-                    "UPDATE todo SET todo_what = %s, todo_when = %s, todo_updated_date=UTC_TIMESTAMP()"
-                    "WHERE todo_id = %s", what, when, int(id))
+                    "UPDATE todo SET todo_what = %s, todo_when = %s, todo_category = %s, todo_updated_date=UTC_TIMESTAMP() "
+                    "WHERE todo_id = %s", what, when, category, int(id))
             elif action=="redo":
                 slug = str(uuid.uuid1())
             
                 self.db.execute(
-                    "INSERT INTO todo (todo_user_id,todo_what,todo_when,todo_slug,todo_created_date,todo_updated_date)"
-                    "VALUES (%s,%s,%s,%s,UTC_TIMESTAMP(),UTC_TIMESTAMP())",
-                    self.current_user.user_id, what,when,slug)
+                    "INSERT INTO todo (todo_user_id,todo_what,todo_when,todo_category,todo_slug,todo_created_date,todo_updated_date) "
+                    "VALUES (%s,%s,%s,%s,%s,UTC_TIMESTAMP(),UTC_TIMESTAMP())",
+                    self.current_user.user_id, what,when,category,slug)
         else:
             slug = str(uuid.uuid1())
             
             self.db.execute(
-                "INSERT INTO todo (todo_user_id,todo_what,todo_when,todo_slug,todo_created_date,todo_updated_date)"
-                "VALUES (%s,%s,%s,%s,UTC_TIMESTAMP(),UTC_TIMESTAMP())",
-                self.current_user.user_id, what,when,slug)
+                "INSERT INTO todo (todo_user_id,todo_what,todo_when,todo_category,todo_slug,todo_created_date,todo_updated_date) "
+                "VALUES (%s,%s,%s,%s,%s,UTC_TIMESTAMP(),UTC_TIMESTAMP())",
+                self.current_user.user_id, what,when,category,slug)
         self.redirect("/todo/" + slug)
 
 
