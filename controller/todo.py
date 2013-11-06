@@ -80,6 +80,9 @@ class TodoComposeHandler(BaseHandler):
         action = self.get_argument("action", None)
         category = self.get_argument("category", 0)
         what = self.get_argument("what")
+        thumb = self.get_argument("todo_thumb",None)
+        logo = self.get_argument("todo_logo",None)
+        print logo
         
         when = self.get_argument("when")
         if id:
@@ -88,22 +91,22 @@ class TodoComposeHandler(BaseHandler):
             if action=="update":
                 slug = entry.todo_slug
                 self.db.execute(
-                    "UPDATE todo SET todo_what = %s, todo_when = %s, todo_category = %s, todo_updated_date=UTC_TIMESTAMP() "
-                    "WHERE todo_id = %s", what, when, category, int(id))
+                    "UPDATE todo SET todo_what = %s, todo_when = %s, todo_category = %s,todo_logo_thumb=%s, todo_logo=%s, todo_updated_date=UTC_TIMESTAMP() "
+                    "WHERE todo_id = %s", what, when, category, thumb, logo, int(id))
             elif action=="redo":
                 slug = str(uuid.uuid1())
             
                 self.db.execute(
-                    "INSERT INTO todo (todo_user_id,todo_what,todo_when,todo_category,todo_slug,todo_created_date,todo_updated_date) "
-                    "VALUES (%s,%s,%s,%s,%s,UTC_TIMESTAMP(),UTC_TIMESTAMP())",
-                    self.current_user.user_id, what,when,category,slug)
+                    "INSERT INTO todo (todo_user_id,todo_what,todo_when,todo_category,todo_slug,todo_logo_thumb,todo_logo,todo_created_date,todo_updated_date) "
+                    "VALUES (%s,%s,%s,%s,%s,%s,%s,UTC_TIMESTAMP(),UTC_TIMESTAMP())",
+                    self.current_user.user_id, what,when,category,slug,thumb,logo)
         else:
             slug = str(uuid.uuid1())
             
             self.db.execute(
-                "INSERT INTO todo (todo_user_id,todo_what,todo_when,todo_category,todo_slug,todo_created_date,todo_updated_date) "
-                "VALUES (%s,%s,%s,%s,%s,UTC_TIMESTAMP(),UTC_TIMESTAMP())",
-                self.current_user.user_id, what,when,category,slug)
+                "INSERT INTO todo (todo_user_id,todo_what,todo_when,todo_category,todo_slug,todo_logo_thumb,todo_logo,todo_created_date,todo_updated_date) "
+                "VALUES (%s,%s,%s,%s,%s,%s,%s,UTC_TIMESTAMP(),UTC_TIMESTAMP())",
+                self.current_user.user_id, what,when,category,slug,thumb,logo)
         self.redirect("/todo/" + slug)
 
 

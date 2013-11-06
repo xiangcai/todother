@@ -24,12 +24,38 @@
       <input type="submit" value="{{ _('Save changes') if entry else _('Publish post') }}" class="submit"/>
       &nbsp;<a href="{{ "/todo/" + entry.todo_slug if entry else "/todo_list" }}">{{ _('Cancel') }}</a>
     </div>
+     <input type="hidden" name="todo_thumb" value=""/>
+     <input type="hidden" name="todo_logo" value=""/>
+   
     {% if entry %}
       <input type="hidden" name="id" value="{{ entry.todo_id }}"/>
-       <input type="hidden" name="action" value="{{ action }}"/>
+      <input type="hidden" name="action" value="{{ action }}"/>
+      <img src="{{ "/img" + entry.todo_logo_thumb }}"/>
     {% end %}
     {% module xsrf_form_html() %}
   </form>
+
+
+  <div class="update_operation dropdown" style="width: 510px;">
+        <div class="oper_attached" style="width: 350px; float: left">
+          <ul class="list-inline">
+           
+            <li>
+            <a class="atta_pic" href="javascript:void(0);" onclick="javascript:toggle_selector();">{{ _('Todo Logo') }}</a>
+            </li>
+           
+          </ul>
+        </div>
+        <div class="hidden dropdown-menu" id="pic_selector" style="top:16px;">
+          <form id="form_upload" action="/img/upload" method="POST" target="upload_ret" enctype="multipart/form-data">
+            {% module xsrf_form_html() %}
+            <input type="FILE" id="pic1" name="postfile" onchange="upload_pic();"/>
+            <input type="SUBMIT" style="display: none;"/>
+          </form>
+          <iframe id="upload_ret" name="upload_ret" src="" style="display: none;" onload="uploadDone();"></iframe>
+          <div class="hidden" id="pic_container" style="width:162px; height:162px; border:dashed 1px #ccc;"></div>
+        </div>
+      </div>
 {% end %}
 
 {% block bottom %}
@@ -51,6 +77,43 @@
       });
     });
 
+    function uploadDone() {
+        var ret = frames['upload_ret'].document.getElementsByTagName("body")[0].innerHTML;
+        var ret_data = eval("(" + ret + ")");
+        if (ret_data.success) {
+            $("#pic_container").append("<img src='/img" + ret_data.thumbname + "'/>");
+            $("#pic_container").append("<input type='text' value='" + ret_data.filename + "' id='ret_pic1' style='display: none'>");
+            $("#pic_container").removeClass("hidden");
+            $("input[name=todo_thumb]").val(ret_data.thumbname);
+            $("input[name=todo_logo]").val(ret_data.filename);
+        } else {
+            alert("Upload failed: " + ret_data.err_info);
+        }
+    }
+
+    function getCookie(name) {
+        var r = document.cookie.match("\\b" + name + "=([^;]*)\\b");
+        return r ? r[1] : undefined;
+    }
+
+    
+
+    function toggle_selector() {
+        if ($("#pic_selector").hasClass("hidden")) {
+            $("#pic_selector").removeClass("hidden");
+            $("#pic_selector").css('display', 'block');
+        } else {
+            $("#pic_selector").addClass("hidden");
+            $("#pic_selector").css('display', 'none');
+            $("#pic1").val('');
+        }
+    }
+
+    function upload_pic() {
+        $("#form_upload").submit();
+    }
+
+     
   //]]>
   </script>
 {% end %}

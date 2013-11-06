@@ -15,7 +15,7 @@ from controller.base import *
 class UploadHandler(BaseHandler):
     def post(self):
         result = {'success': True}
-        dirname = '/home/yli/uploads'
+        dirname = '/var/todother/uploads/'
         if self.request.files:
             try:
                 upload_img = self.request.files['postfile'][0]
@@ -48,7 +48,7 @@ class UploadHandler(BaseHandler):
 
 class FileHandler(BaseHandler):
     def get(self, filename):
-        filename = '/home/yli/uploads/' + filename
+        filename = '/var/todother/uploads/' + filename
         if os.path.exists(filename):
             with open(filename, 'rb') as file:
                 self.write(file.read())
