@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Loading Bootstrap -->
-    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Loading Flat UI -->
     <link href="/static/css/flat-ui.css" rel="stylesheet">
@@ -21,26 +21,34 @@
   <body>
   <div id="wrap">
   	<header>
-		<div class="navbar navbar-sunflower">
-			<div class="navbar-header">
-          		<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-collapse-01"></button>
+		<div class="navbar navbar-sunflower" role="navigation">
+      <div class="navbar-inner container">
+        <div class="navbar-header">
+          		<button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-01"></button>
 	          	<a href="#fakelink" class="navbar-brand">Todother</a>
-          	</div>          
+          	</div>
             <div class="navbar-collapse collapse navbar-collapse-01">
-              <div class="sign-box navbar-right">
-              		<a href="/register" class="btn btn-info btn-lg btn-block">注册帐号</a>
+              <div class="navbar-right">
+                <div class="iconbar iconbar-horizontal">
+                  <ul>
+                    <li><a href="/register" class="fui-plus">&nbsp;注册帐户</a></li>
+                  </ul>
+                </div> <!-- /iconbar -->
               </div>
             </div><!--/.nav-collapse -->
+      </div>
 		</div> <!-- /navbar -->
     </header>
     <br />
-    <div class="container" style="background: url('/static/images/yourtodo.png') no-repeat; background-size: 60%;">
+    <div class="container">
     
       <div class="row">
 		<div class="col-sm-8">
         	<div class="row">
             <div class="col-sm-11">
-
+              <h2>要做，一起做!</h2>
+              <p>创建待办事项，管理日程，无论是生活还是工作，有效达成目标，</p>
+              <p>别忘了分享你的愿望，小伙伴们一起帮你实现！</p>
             </div>
             <div class="col-sm-1"></div>
            </div>

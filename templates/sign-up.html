@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Loading Bootstrap -->
-    <link href="/static/css/bootstrap.css" rel="stylesheet">
+    <link href="/static/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- Loading Flat UI -->
     <link href="/static/css/flat-ui.css" rel="stylesheet">
@@ -19,29 +19,80 @@
     <![endif]-->
   </head>
   <body>
-  <div id="wrap">
+  <div id="wrap2">
   	<header>
-		<div class="navbar navbar-sunflower">
-			<div class="navbar-header">
-          		<button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-collapse-01"></button>
-	          	<a href="#fakelink" class="navbar-brand">Todother</a>
-          	</div>          
-            <div class="navbar-collapse collapse navbar-collapse-01">
-              <div class="sign-box navbar-right">
-              		<a href="home.html" class="btn btn-primary btn-lg btn-block">登陆</a>
-              </div>
-            </div><!--/.nav-collapse -->
+    <div class="navbar navbar-sunflower" role="navigation">
+      <div class="navbar-inner container">
+        <div class="navbar-header">
+          <button type="button" class="btn navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-01"></button>
+          <a href="#fakelink" class="navbar-brand">Todother</a>
+        </div>
+        <div class="navbar-collapse collapse navbar-collapse-01">
+          <div class="navbar-right">
+            <div class="iconbar iconbar-horizontal">
+              <ul>
+                <li><a href="/login" class="fui-user">&nbsp;用户登陆</a></li>
+              </ul>
+            </div> <!-- /iconbar -->
+          </div>
+        </div><!--/.nav-collapse -->
+      </div>
 		</div> <!-- /navbar -->
     </header>
     <br />
     <div class="container">
     
-      <div class="row" style="background: url('/static/images/yourtodo.png') no-repeat; background-size: 60%;">
+      <div class="row">
 		<div class="col-sm-8">
         	<div class="row">
             <div class="col-sm-11">
-            	<h2>To do together</h2>
-
+              <h2>小伙伴们一起做</h2>
+              <hr>
+              <div class="row">
+                <div class="col-sm-3">
+                  <!--<img src="/static/images/icons/book.svg">-->
+                  <embed src="/static/images/icons/book.svg" type="image/svg+xml">
+                </div>
+                <div class="col-sm-9">
+                  <h4>特色1</h4>
+                  <p>
+                    We here at Lifehack have been huge advocates of the Moleskine as a tool for ubiquitous capture — for jotting down ideas whenever and wherever they occur to you. They’re also great for keeping your task list and other information you might need over the course of the day. But those are hardly the only things a Moleskine is useful for!
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <img src="/static/images/icons/pig.svg">
+                </div>
+                <div class="col-sm-9">
+                  <h4>特色2</h4>
+                  <p>
+                    These days, Moleskines come in all sizes and colors, in a variety of specialized formats, and in both hard-covered and soft-covered versions. From the just-bigger-than-a-business-card extra-small Volants to the nearly letter-sized extra-large Cahiers, there are notebooks that can be adapted to just about every purpose.
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <img src="/static/images/icons/car.svg">
+                </div>
+                <div class="col-sm-9">
+                  <h4>特色3</h4>
+                  <p>
+                    I run several blogs aside from the work I do at Lifehack. Each of them has it’s own medium-sized Moleskine notebook (a soft-cover one — I don’tneed all the pages of the hard-cover notebooks for this) in which I record passwords, configuration information, and notes for future changes. When I’m brainstorming post ideas, they go into their relevant notebooks, along with any other miscellanea related to each site.
+                  </p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-3">
+                  <img src="/static/images/icons/basket.svg">
+                </div>
+                <div class="col-sm-9">
+                  <h4>特色4</h4>
+                  <p>
+                    Use a lined or grid-paper notebook to track expenses throughout the day. You can easily store receipts in the back pocket, and reconcile your notebook with your accounting software at the end of each week or month (epending on how extensive your expenses are).
+                  </p>
+                </div>
+              </div>
             </div>
             <div class="col-sm-1"></div>
            </div>

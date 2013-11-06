@@ -2,72 +2,105 @@
 /* CSS Document */
 html,
 body {
-  height: 100%;
 }
 
-/* Wrapper for page content to push down footer */
-#wrap {
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
-  /* Negative indent footer by it's height */
-  margin: 0 auto -100px;
-}
-
-/* Lastly, apply responsive CSS fixes as necessary */
-@media (max-width: 767px) {
-#footer {
-  margin-left: -20px;
-  margin-right: -20px;
-  padding-left: 20px;
-  padding-right: 20px;
-}
+#wrap{
+	background:url(../images/shine.jpg) no-repeat center center;
+	-webkit-background-size: cover;
+  	-moz-background-size: cover;
+  	-o-background-size: cover;
+  	background-size: cover;
 }
 
 .navbar-sunflower{
-	background-color:#f1c40f;
+	background-color:#ecf0f1;
 }
+
 .navbar {
   font-size: 16px;
   border-radius: 0;
   border: none;
 }
+
 .navbar .navbar-brand {
-  border-radius: 6px 0 0 6px;
-  color: #ffffff;
+  border-radius:0;
   font-size: 24px;
-  line-height: 29.55px;
+  line-height: 64px;
   font-weight: 700;
-  padding: 23px 28px 24px 17px;
+  padding:0 0 0 20px;
   text-shadow: none;
   display: inline-block;
 }
-.sign-box{
-	margin-top:16px;
+
+.navbar .navbar-toggle:before {
+  content: "\e00c";
+  font-family: "Flat-UI-Icons";
+  font-size: 23px;
+  font-style: normal;
+  font-weight: normal;
+  -webkit-font-smoothing: antialiased;
 }
-.sign-box .btn{
-	border-radius:0;
+
+.iconbar {
+  background-color:transparent;
+  margin: 0 20px 0 0;
 }
-.bg-feature{
-	background:url(../images/shine.jpg);
-	max-width:100%;
+
+.iconbar > ul > li > a {
+  font-size: 14px;
+  color:#2c3e50;
 }
+
+.iconbar-unread {
+  background-color: #e74c3c;
+}
+
 .form-control{
 	margin-bottom:15px;
 }
-.logo{
-	margin-top:8%;
-	margin-bottom:40px;
-	height:60px;
-	background:url(../images/logo.png) no-repeat center center;
-}
-.white-bg{
-	background-color:#ffffff;
-}
+
 .fui-checkbox-unchecked:before {
 	background-color:#f1c40f;
 	color:#bdc3c7;
 }
+
 .fui-checkbox-checked:before {
   background-color:#f1c40f;
+}
+
+.bottom-menu{
+	background-color:#1abc9c;
+	color:#ffffff;
+}
+
+.bottom-menu a:hover{
+	color:#2c3e50;
+}
+
+img {
+	max-width:100%;
+}
+
+/*背景颜色*/
+.bg-clouds{
+	background-color:#ecf0f1;
+}
+/*字体颜色*/
+.ft-silver{
+	color:#bdc3c7;
+}
+.ft-alizarin{
+	color:#e74c3c;
+}
+
+.small2{
+	font-size:12px;
+}
+
+.margin-top-100{
+	margin-top:100px;
+}
+
+.margin-right-10{
+	margin-right:10px;
 }
