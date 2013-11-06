@@ -46,7 +46,9 @@ CREATE TABLE  todo (
   todo_category int(11) NOT NULL DEFAULT 0,
   todo_viewed int(11) NOT NULL DEFAULT 0,
   todo_slug varchar(40) NOT NULL,
-  todo_updated_date datetime
+  todo_updated_date datetime,
+  todo_logo_thumb varchar(100),
+  todo_logo varchar(100)
 )
 
 DROP TABLE IF EXISTS todo_update;
