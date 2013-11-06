@@ -2,6 +2,20 @@
 
 {% block body %}
   <form action="{{ request.path }}" method="post" class="compose">
+
+    Category: 
+    <div style="margin-bottom:5px">
+      <select name="category">
+        <option value="0" {% if entry and entry.todo_category == 0 %} selected{% end %}>default</option>
+        <option value="1" {% if entry and entry.todo_category == 1 %} selected{% end %}>promoted</option>
+        <option value="2" {% if entry and entry.todo_category == 2 %} selected{% end %}>sport</option>
+        <option value="3" {% if entry and entry.todo_category == 3 %} selected{% end %}>adventure</option>
+        <option value="4" {% if entry and entry.todo_category == 4 %} selected{% end %}>lifestyle</option>
+        <option value="5" {% if entry and entry.todo_category == 5 %} selected{% end %}>creative</option>
+        <option value="6" {% if entry and entry.todo_category == 6 %} selected{% end %}>relationshiop</option>
+        <option value="7" {% if entry and entry.todo_category == 7 %} selected{% end %}>self-growth</option>
+      </select> 
+    </div>
     
     When: <div style="margin-bottom:5px"><input name="when" type="text" class="title" value="{{ entry.todo_when if entry else "" }}"/></div>
     
