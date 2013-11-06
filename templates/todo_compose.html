@@ -5,7 +5,7 @@
 
     Category: 
     <div style="margin-bottom:5px">
-      <select name="category">
+      <select name="category" id="category">
         <option value="0" {% if entry and entry.todo_category == 0 %} selected{% end %}>default</option>
         <option value="1" {% if entry and entry.todo_category == 1 %} selected{% end %}>promoted</option>
         <option value="2" {% if entry and entry.todo_category == 2 %} selected{% end %}>sport</option>
@@ -24,13 +24,15 @@
       <input type="submit" value="{{ _('Save changes') if entry else _('Publish post') }}" class="submit"/>
       &nbsp;<a href="{{ "/todo/" + entry.todo_slug if entry else "/todo_list" }}">{{ _('Cancel') }}</a>
     </div>
-     <input type="hidden" name="todo_thumb" value=""/>
-     <input type="hidden" name="todo_logo" value=""/>
+     <input type="hidden" name="todo_thumb" id="todo_thumb" value="{{ entry.todo_logo_thumb if entry else "" }}"/>
+     <input type="hidden" name="todo_logo" id="todo_logo" value="{{ entry.todo_logo if entry else "" }}"/>
    
     {% if entry %}
       <input type="hidden" name="id" value="{{ entry.todo_id }}"/>
       <input type="hidden" name="action" value="{{ action }}"/>
-      <img src="{{ "/img" + entry.todo_logo_thumb }}"/>
+      <img name="entry_thumb" id="entry_thumb" src="{{ entry.todo_logo_thumb if entry.todo_logo_thumb.startswith('/static') else "/img" + entry.todo_logo_thumb }}"/>
+    {% else %}
+      <img name="entry_thumb" id="entry_thumb"/>
     {% end %}
     {% module xsrf_form_html() %}
   </form>
@@ -72,6 +74,34 @@
                   $(form[required[i]]).select();
                   return false;
               }
+          }
+          
+          if (($("#todo_thumb").val() == "" && typeof $("#entry_thumb").attr("src") === "undefined") || $("#todo_thumb").val().substring(0, 8) === "/static/"){
+            if($("#category").val()==0){
+              $("input[name=todo_thumb]").val("/static/images/todo01.jpg");
+              $("input[name=todo_logo]").val("/static/images/todo01.jpg");
+            }else if($("#category").val()==1){
+              $("input[name=todo_thumb]").val("/static/images/todo02.jpg");
+              $("input[name=todo_logo]").val("/static/images/todo02.jpg");
+            }else if($("#category").val()==2){
+              $("input[name=todo_thumb]").val("/static/images/todo03.jpg");
+              $("input[name=todo_logo]").val("/static/images/todo03.jpg");
+            }else if($("#category").val()==3){
+              $("input[name=todo_thumb]").val("/static/images/todo04.jpg");
+              $("input[name=todo_logo]").val("/static/images/todo04.jpg");
+            }else if($("#category").val()==4){
+              $("input[name=todo_thumb]").val("/static/images/todo05.jpg");
+              $("input[name=todo_logo]").val("/static/images/todo05.jpg");
+            }else if($("#category").val()==5){
+              $("input[name=todo_thumb]").val("/static/images/todo06.jpg");
+              $("input[name=todo_logo]").val("/static/images/todo06.jpg");
+            }else if($("#category").val()==6){
+              $("input[name=todo_thumb]").val("/static/images/todo07.jpg");
+              $("input[name=todo_logo]").val("/static/images/todo07.jpg");
+            }else if($("#category").val()==7){
+              $("input[name=todo_thumb]").val("/static/images/todo08.jpg");
+              $("input[name=todo_logo]").val("/static/images/todo08.jpg");
+            }
           }
           return true;
       });

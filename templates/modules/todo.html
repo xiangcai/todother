@@ -3,7 +3,11 @@
 <div class="entry">
   <h1><a href="/todo/{{ entry.todo_slug }}">{{ entry.todo_slug }}</a></h1>
   {% if entry.todo_logo_thumb %}
-    <div class="date"><img src="{{ "/img" + entry.todo_logo_thumb }}"/></div>
+    {% if entry.todo_logo_thumb.startswith('/static') %}
+      <div class="date"><img src="{{ entry.todo_logo_thumb }}"/></div>
+    {% else  %} 
+      <div class="date"><img src="{{ "/img" + entry.todo_logo_thumb }}"/></div>
+    {% end  %} 
   {% end  %} 
   {{ _("Created in") }}<div class="date">{{ entry.todo_created_date }}</div>
   {{ _("Todo Type") }}<div class="date">
