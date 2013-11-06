@@ -154,72 +154,20 @@ Mauris sed ante vel neque laoreet ornare non in velit. Cras in tincidunt purus. 
         </div><!--/centre col-->
         
         <div class="col-md-3"><!--right col-->
-        
+          {% for story in top_stories %}
           <div class="row"><!--todo stories-->
             <div class="row">
               <div class="col-md-12">
-                <img src="http://placehold.it/400x200">
+                <img src="/img{{ story.todo_logo_thumb }}">
               </div>
             </div>
             <div class="row">
               <div class="col-md-12 small2">
-                <a href="#"><h6>Todo top 5</h6></a>
+                <a href="/todo/{{ story.todo_slug }}"><h6>{{ escape(story.todo_what) }}</h6></a>
               </div>
             </div>
           </div><!--/todo stories-->
-          
-          <div class="row"><!--todo stories-->
-            <div class="row">
-              <div class="col-md-12">
-                <img src="http://placehold.it/400x200">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12 small2">
-                <a href="#"><h6>Todo top 5</h6></a>
-              </div>
-            </div>
-          </div><!--/todo stories-->
-          
-          <div class="row"><!--todo stories-->
-            <div class="row">
-              <div class="col-md-12">
-                <img src="http://placehold.it/400x200">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12 small2">
-                <a href="#"><h6>Todo top 5</h6></a>
-              </div>
-            </div>
-          </div><!--/todo stories-->
-          
-          <div class="row"><!--todo stories-->
-            <div class="row">
-              <div class="col-md-12">
-                <img src="http://placehold.it/400x200">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12 small2">
-                <a href="#"><h6>Todo top 5</h6></a>
-              </div>
-            </div>
-          </div><!--/todo stories-->
-          
-          <div class="row"><!--todo stories-->
-            <div class="row">
-              <div class="col-md-12">
-                <img src="http://placehold.it/400x200">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-12 small2">
-                <a href="#"><h6>Todo top 5</h6></a>
-              </div>
-            </div>
-          </div><!--/todo stories-->
-          
+          {% end %}
         </div><!--/right col-->
       </div>
     </div><!-- /.container -->
