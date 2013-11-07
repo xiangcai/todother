@@ -3,6 +3,51 @@
 
 {% block body %}
 
+<div id="waterfall"></div>
 
+
+{% end %}
+
+{% block bottom %}
+<link href="/static/css/waterfall.css" rel="stylesheet">
+<script type="text/javascript" src="/static/js/jquery.waterfall.js"></script>
+
+<script type="text/javascript">
+
+$(function(){
+    var wf_page = 0;
+    $('#waterfall').waterfall({
+        ajaxFunc: function(success, error){
+            $.ajax({
+                type: 'GET',
+                url: '/todo_load_whatsnew',
+                cache: false,
+                data: {'page': ++wf_page},
+                dataType:'json',
+                timeout: 60000,
+                success: success,
+                error: error
+            });
+        },
+        
+        colMinWidth: 400, 
+        defaultContainerWidth: 800,
+        autoresize: true,
+        createHtml: function(data){
+            return '<div class="wf_item_inner">' +
+                      '<a href="'+ data.url +'" class="thumb" target="_blank">' +
+                        '<img class="thumb_img"  src="/img'+ data.todo_thumb +'" />' +
+                      '</a>' +
+                      '<p class="title" style="margin-top:1px;">'+ data.todo_what +'</p>' +
+                      '<p class="desc" style="margin-top:1px;">'+ data.user_name +'</p>' +
+                      '<p class="desc" style="margin-top:1px;">'+ data.todo_created_date +'</p>' +
+                  '</div>';
+        }       
+    });
+    
+    
+   
+});
+</script>
 {% end %}
 

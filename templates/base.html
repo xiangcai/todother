@@ -15,6 +15,7 @@
              <a href="/todo_list">{{ _('My Todo') }}</a> -
              <a href="/todo_achieve_list">{{ _('My Achievement') }}</a> -
              <a href="/todo_giveup_list">{{ _('My Giveup') }}</a> -
+             <a href="/todo_whatsnew">{{ _('What''s New') }}</a> -
             <a href="/logout?next={{ url_escape(request.uri) }}">{{ _('Sign out') }}</a>
           {% else %}
             {% raw _('<a href="%(url)s">Sign in</a> to compose/edit') % {"url": "/login?next=" + url_escape(request.uri)} %}

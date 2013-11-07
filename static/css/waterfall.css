@@ -1,0 +1,46 @@
+﻿@charset "utf-8";
+/* Css Reset For XHTML*/
+html{color:#000;background:#FFF}
+
+img{border:0 none;}
+
+
+
+
+
+/* 瀑布流样式 */
+.waterfall{overflow:hidden;zoom:1;width:100%;}
+.wf_inner{margin:15px auto;}
+.wf_col{position:relative;min-height:473px;_height:473px;top:15px;}
+.wf_item{
+	box-sizing:border-box;width:235px;
+	border:1px solid #d2d2d2;box-shadow:5px 3px 3px rgba(221,221,221,.32);color:#565656;
+	float:left;overflow:hidden;zoom:1;
+	position:absolute;
+    border-radius:8px;
+}
+.wf_item_inner{margin:15px;}
+.wf_item .thumb{background:#E9E9E9;position:relative;display:block;overflow:hidden;font-size:0;}
+.wf_item .thumb_img{width:100%;max-width:100%;-ms-interpolation-mode:bicubic;/*解决IE7缩放图片会失真*/}
+.wf_item .title{height:27px;margin:7px 0 0;color:#538700;font-size:17px;font-family:\5FAE\8F6F\96C5\9ED1;}
+.wf_item .title a{color:#060;}
+.wf_item .desc{word-wrap:break-word;word-break:break-all;color:#888;}
+.wf_result{height:32px;line-height:32px;margin-top:15px;text-align:center;color:#666;}
+.wf_loading{background:url(../images/loading.gif) center center no-repeat;}
+#backTop{cursor:pointer;width:38px;height:38px;background:url(../images/backTop.gif) no-repeat 0 -39px;}
+#backTop:hover{background-position:0 0;}
+
+
+/* 固定菜单样式*/
+.wf_list_menu{}
+.wf_list_menu h3{height:28px;line-height:28px;color:#000;font-size:14px;font-weight:bold;}
+.wf_list_menu p{font-size:0;}
+.wf_list_menu p a{
+	display:inline-block;margin:4px 4px 4px 0;width:63px;line-height:27px;
+	color:#000;text-align:center;font-size:14px;cursor:pointer;
+}
+.wf_list_menu p a.on{background:#8BB843;color:#fff;border-radius:2px;}
+.wf_list_menu p a:hover{color:#060;text-decoration:underline;}
+.wf_list_menu p a.on:hover{color:#fff;text-decoration:none;}
+.wf_list_menu .line_b{border-bottom: 1px dashed #eaeaea;padding-bottom:10px;margin-bottom:10px;}
+/* end 瀑布流样式 */

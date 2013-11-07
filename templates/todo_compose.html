@@ -30,7 +30,7 @@
     {% if entry %}
       <input type="hidden" name="id" value="{{ entry.todo_id }}"/>
       <input type="hidden" name="action" value="{{ action }}"/>
-      <img name="entry_thumb" id="entry_thumb" src="{{ entry.todo_logo_thumb if entry.todo_logo_thumb.startswith('/static') else "/img" + entry.todo_logo_thumb }}"/>
+      <img name="entry_thumb" id="entry_thumb" src="{{ "/img" + entry.todo_logo_thumb }}"/>
     {% else %}
       <img name="entry_thumb" id="entry_thumb"/>
     {% end %}
@@ -76,31 +76,31 @@
               }
           }
           
-          if (($("#todo_thumb").val() == "" && typeof $("#entry_thumb").attr("src") === "undefined") || $("#todo_thumb").val().substring(0, 8) === "/static/"){
+          if (($("#todo_thumb").val() == "" && typeof $("#entry_thumb").attr("src") === "undefined") || $("#todo_thumb").val().substring(0, 11) === "/todo_logo/"){
             if($("#category").val()==0){
-              $("input[name=todo_thumb]").val("/static/images/todo01.jpg");
-              $("input[name=todo_logo]").val("/static/images/todo01.jpg");
+              $("input[name=todo_thumb]").val("/todo_logo/todo01.jpg");
+              $("input[name=todo_logo]").val("/todo_logo/todo01.jpg");
             }else if($("#category").val()==1){
-              $("input[name=todo_thumb]").val("/static/images/todo02.jpg");
-              $("input[name=todo_logo]").val("/static/images/todo02.jpg");
+              $("input[name=todo_thumb]").val("/todo_logo/todo02.jpg");
+              $("input[name=todo_logo]").val("/todo_logo/todo02.jpg");
             }else if($("#category").val()==2){
-              $("input[name=todo_thumb]").val("/static/images/todo03.jpg");
-              $("input[name=todo_logo]").val("/static/images/todo03.jpg");
+              $("input[name=todo_thumb]").val("/todo_logo/todo03.jpg");
+              $("input[name=todo_logo]").val("/todo_logo/todo03.jpg");
             }else if($("#category").val()==3){
-              $("input[name=todo_thumb]").val("/static/images/todo04.jpg");
-              $("input[name=todo_logo]").val("/static/images/todo04.jpg");
+              $("input[name=todo_thumb]").val("/todo_logo/todo04.jpg");
+              $("input[name=todo_logo]").val("/todo_logo/todo04.jpg");
             }else if($("#category").val()==4){
-              $("input[name=todo_thumb]").val("/static/images/todo05.jpg");
-              $("input[name=todo_logo]").val("/static/images/todo05.jpg");
+              $("input[name=todo_thumb]").val("/todo_logo/todo05.jpg");
+              $("input[name=todo_logo]").val("/todo_logo/todo05.jpg");
             }else if($("#category").val()==5){
-              $("input[name=todo_thumb]").val("/static/images/todo06.jpg");
-              $("input[name=todo_logo]").val("/static/images/todo06.jpg");
+              $("input[name=todo_thumb]").val("/todo_logo/todo06.jpg");
+              $("input[name=todo_logo]").val("/todo_logo/todo06.jpg");
             }else if($("#category").val()==6){
-              $("input[name=todo_thumb]").val("/static/images/todo07.jpg");
-              $("input[name=todo_logo]").val("/static/images/todo07.jpg");
+              $("input[name=todo_thumb]").val("/todo_logo/todo07.jpg");
+              $("input[name=todo_logo]").val("/todo_logo/todo07.jpg");
             }else if($("#category").val()==7){
-              $("input[name=todo_thumb]").val("/static/images/todo08.jpg");
-              $("input[name=todo_logo]").val("/static/images/todo08.jpg");
+              $("input[name=todo_thumb]").val("/todo_logo/todo08.jpg");
+              $("input[name=todo_logo]").val("/todo_logo/todo08.jpg");
             }
           }
           return true;

@@ -197,9 +197,25 @@ class TodoGiveupListHandler(BaseHandler):
 class TodoRandomJsonHandler(BaseHandler):
     def get(self):
         total = 100
+        result = []
+        page = self.get_argument("page", None)
+        print page
         #TODO filter out the user self's todo
-        entries = self.db.query("SELECT * FROM todo WHERE todo_user_id = %s and todo_status = %s "
+        entries = self.db.query("SELECT t.*, u.nickname,u.language,u.gender FROM todo t left join auth_user u on todo_user_id = user_id WHERE todo_user_id = %s and todo_status = %s "
                                 "ORDER BY todo_created_date LIMIT %s", self.current_user.user_id,0,total)
-        json = tornado.escape.json_encode(entries)
-        self.render("todo_whatsnew.html", json=json,title="What's New")
+        for entry in entries:
+            todo_match = TodoMatchEntity(entry.todo_id)
+            todo_match.load(entry)
+            result.append(todo_match)
+            entry.todo_created_date = entry.todo_created_date.strftime('%Y-%m-%d')
+            entry.todo_updated_date = entry.todo_updated_date.strftime('%Y-%m-%d')
+        #print entries
+        json_result = json.dumps(result, default=lambda a: a.__dict__)
+        print json_result
+        self.write(json_result)
+
+class TodoWhatsNewHandler(BaseHandler):
+    def get(self):
+        self.render("todo_whatsnew.html")
+
 
