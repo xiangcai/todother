@@ -201,8 +201,8 @@ class TodoRandomJsonHandler(BaseHandler):
         page = self.get_argument("page", None)
         print page
         #TODO filter out the user self's todo
-        entries = self.db.query("SELECT t.*, u.nickname,u.language,u.gender FROM todo t left join auth_user u on todo_user_id = user_id WHERE todo_user_id = %s and todo_status = %s "
-                                "ORDER BY todo_created_date LIMIT %s", self.current_user.user_id,0,total)
+        entries = self.db.query("SELECT t.*, u.nickname,u.language,u.gender FROM todo t left join auth_user u on todo_user_id = user_id WHERE  todo_status = %s "
+                                "ORDER BY todo_created_date LIMIT %s", 0,total)
         for entry in entries:
             todo_match = TodoMatchEntity(entry.todo_id)
             todo_match.load(entry)
