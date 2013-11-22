@@ -15,6 +15,8 @@ from controller import auth
 from controller import user
 from controller import update
 from controller import img
+from controller import search
+from controller import group
 
 handlers = [
     (r"/", main.MainHandler),
@@ -40,6 +42,11 @@ handlers = [
     (r"/img/upload", img.UploadHandler),
     (r"/img/(.*)/delete", img.DeleteHandler),
     (r"/img/(.*)", img.FileHandler),
+    (r"/search", search.SearchHandler),
+    (r"/group_new", group.GroupNewHandler),
+    (r"/group_chat/([^/]+)", group.GroupChatHandler),
+    (r"/group_message/new", group.GroupMessageNewHandler),
+    (r"/group_message/update", group.GroupMessageUpdatesHandler),
     ]
 
 if __name__ == "__main__":

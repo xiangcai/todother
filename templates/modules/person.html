@@ -1,0 +1,10 @@
+<div class="entry">
+  <h1><a href="/person/{{ entry.user_id }}">{{ entry.nickname }}</a></h1>
+  {{ _("Language") }}<div class="date">{{ entry.language }}</div>
+  {{ _("Level") }}<div class="date">{{ entry.user_level }}</div>
+  {{ _("Gender") }}<div class="date">{{ entry.gender }}</div>
+  {% if current_user %}
+      <div class="btn"><a href="#">{{ _("Add to Friend") }}</a></div>
+      <div class="btn"><a href="#">{{ _("Follow") }}</a></div>
+  {% end %}
+</div>

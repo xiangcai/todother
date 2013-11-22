@@ -1,0 +1,17 @@
+{% from module.todo_entity import TodoMatchEntity %}
+{% from module.user import UserEntity %}
+{% extends "base.html" %}
+
+{% block body %}
+    
+  {% for entry in entries %}
+    {% if isinstance(entry,TodoMatchEntity) %}
+        {% module TodoMatchModule(entry) %}
+    {% elif isinstance(entry,UserEntity)  %}
+        {% module PersonModule(entry) %}
+    {% end %}
+  {% end %}
+  
+  {% module PageMudule(page, pagesize, totalnum) %}
+
+{% end %}

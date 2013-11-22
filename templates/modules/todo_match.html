@@ -1,6 +1,11 @@
 <div class="entry">
-  <h1><a href="/todo/{{ entry.todo_slug }}">{{ entry.todo_slug }}</a></h1>
+  <h1><a href="/todo/{{ entry.todo_slug }}">{{ entry.todo_slug }}
  
+  {% if entry.todo_group_id %}
+    (Todo Group)
+  {% end %}
+
+  </a></h1>
   User Name: <div class="date">{{ entry.user_name }}</div>
   User Gender: <div class="date">{{ entry.user_gender }}</div>
   User Language: <div class="date">{{ entry.user_language }}</div>
@@ -13,7 +18,10 @@
   Todo Created: <div class="date">{{ entry.todo_created_date }}</div>
   Last Update: <div class="date">{{ entry.todo_updated_date }}</div>
   Distance from you: <div class="date">{{ entry.todo_distance }}</div>
-  Match: <div class="date">{{ "{:.0%}".format(entry.todo_match) }}</div>
+  {% if entry.todo_match %}
+    Match: <div class="date">{{ "{:.0%}".format(entry.todo_match) }}</div>
+  {% end %}
  
+  <div class="btn"><a href="/group_new?todo_id={{ entry.todo_id }}&self_id={{entry.self_id}}">{{ _("Todother") }}</a></div>
   
 </div>

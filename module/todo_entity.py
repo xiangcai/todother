@@ -3,12 +3,14 @@ import sys
 
 
 class TodoMatchEntity(object):
-    def __init__(self, todo_id):
+    def __init__(self, todo_id,self_id):
         self.todo_id = todo_id
+        self.self_id = self_id
 
     def load(self, entity):
         self.todo_slug = entity.todo_slug
         self.user_name = entity.nickname
+        self.todo_group_id = entity.todo_group_id
         self.todo_what = entity.todo_what
         self.todo_when = entity.todo_when
         self.todo_thumb = entity.todo_logo_thumb

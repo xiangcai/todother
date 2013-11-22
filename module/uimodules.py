@@ -4,6 +4,12 @@ import urlparse
 import urllib
 import tornado.web
 
+
+class PersonModule(tornado.web.UIModule):
+    def render(self, entry):
+        return self.render_string("modules/person.html", entry=entry)
+
+
 class TodoModule(tornado.web.UIModule):
     def render(self, entry, updates=None, times=None, with_update=False):
         if not with_update:

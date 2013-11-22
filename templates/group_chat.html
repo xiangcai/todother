@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+
+
+   
+    <div id="body">
+      <div id="inbox">
+        {% for message in messages %}
+          {% module Template("group_message.html", message=message) %}
+        {% end %}
+      </div>
+      <div id="input">
+        <form action="/group_message/new" method="post" id="messageform">
+          <table>
+            <tr>
+              <td><input name="body" id="message" style="width:500px"/></td>
+              <td><input name="group_id" id="group_id" type="hidden" value="{{group_id}}"/></td>
+              <td style="padding-left:5px">
+                <input type="submit" value="{{ _("Post") }}"/>
+                <input type="hidden" name="next" value="{{ request.path }}"/>
+                {% module xsrf_form_html() %}
+              </td>
+            </tr>
+          </table>
+        </form>
+      </div>
+    </div>
+
+    <script type="text/javascript" src="/static/js/chat.js"></script>
+
+{% end %}
+

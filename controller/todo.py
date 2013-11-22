@@ -12,6 +12,7 @@ import urlparse
 import urllib
 
 import Levenshtein
+import jieba
 
 from controller.base import *
 
@@ -76,39 +77,65 @@ class TodoComposeHandler(BaseHandler):
     
     @tornado.web.authenticated
     def post(self):
-        id = self.get_argument("id", None)
+        todo_id = self.get_argument("id", None)
         action = self.get_argument("action", None)
         category = self.get_argument("category", 0)
         what = self.get_argument("what")
         thumb = self.get_argument("todo_thumb",None)
         logo = self.get_argument("todo_logo",None)
-        print logo
-        
+
+        seg_list = jieba.cut(what, cut_all=True)
+
         when = self.get_argument("when")
-        if id:
-            entry = self.db.get("SELECT * FROM todo WHERE todo_id = %s", int(id))
+        if todo_id:
+            entry = self.db.get("SELECT * FROM todo WHERE todo_id = %s", int(todo_id))
             if not entry: raise tornado.web.HTTPError(404)
             if action=="update":
                 slug = entry.todo_slug
                 self.db.execute(
                     "UPDATE todo SET todo_what = %s, todo_when = %s, todo_category = %s,todo_logo_thumb=%s, todo_logo=%s, todo_updated_date=UTC_TIMESTAMP() "
-                    "WHERE todo_id = %s", what, when, category, thumb, logo, int(id))
+                    "WHERE todo_id = %s", what, when, category, thumb, logo, int(todo_id))
+                self.db.execute(
+                    "DELETE todo_tag where todo_id=%s",int(todo_id))
+                for seg in seg_list:
+                    if seg != "":
+                        self.db.execute(
+                        "INSERT INTO todo_tag (tag_todo_id,tag_value) "
+                        "VALUES (%s,%s)",
+                        int(todo_id),seg)
             elif action=="redo":
                 slug = str(uuid.uuid1())
             
-                self.db.execute(
+                todo_id = self.db.execute_lastrowid(
                     "INSERT INTO todo (todo_user_id,todo_what,todo_when,todo_category,todo_slug,todo_logo_thumb,todo_logo,todo_created_date,todo_updated_date) "
                     "VALUES (%s,%s,%s,%s,%s,%s,%s,UTC_TIMESTAMP(),UTC_TIMESTAMP())",
                     self.current_user.user_id, what,when,category,slug,thumb,logo)
+                for seg in seg_list:
+                    if seg != "":
+                        self.db.execute(
+                        "INSERT INTO todo_tag (tag_todo_id,tag_value) "
+                        "VALUES (%s,%s)",
+                        todo_id,seg)
         else:
             slug = str(uuid.uuid1())
             
-            self.db.execute(
+            todo_id = self.db.execute_lastrowid(
                 "INSERT INTO todo (todo_user_id,todo_what,todo_when,todo_category,todo_slug,todo_logo_thumb,todo_logo,todo_created_date,todo_updated_date) "
                 "VALUES (%s,%s,%s,%s,%s,%s,%s,UTC_TIMESTAMP(),UTC_TIMESTAMP())",
                 self.current_user.user_id, what,when,category,slug,thumb,logo)
+            for seg in seg_list:
+                if seg != "":
+                    self.db.execute(
+                    "INSERT INTO todo_tag (tag_todo_id,tag_value) "
+                    "VALUES (%s,%s)",
+                    todo_id,seg)
         self.redirect("/todo/" + slug)
 
+    def is_chinese(self,uchar):
+        if uchar >= u'\u4e00' and uchar<=u'\u9fa5':
+            return True
+        else:
+            return False
 
 class TodoChangeStatusHandler(BaseHandler):
     @tornado.web.authenticated
@@ -150,9 +177,10 @@ class TodoFindHandler(BaseHandler):
         selfentry = None
         if id:
             selfentry = self.db.get("SELECT * FROM todo WHERE todo_id = %s", int(id))
-            selfid = selfentry.todo_slug
+            selfid = selfentry.todo_id
             #TODO filter out current user's todo
-            entries = self.db.query("SELECT t.*, u.nickname,u.language,u.gender FROM todo t left join auth_user u on todo_user_id = user_id WHERE todo_id != %s", int(id))
+            entries = self.db.query("SELECT t.*, u.nickname,u.language,u.gender FROM todo t left join auth_user u on todo_user_id = user_id "
+                                "WHERE todo_id != %s", int(id))
             if selfentry and entries:
 
                 for entry in entries:
@@ -162,7 +190,7 @@ class TodoFindHandler(BaseHandler):
                         match = match + when_match
                     
                     match = match + Levenshtein.ratio(entry.todo_what,selfentry.todo_what) * what_match
-                    todo_match = TodoMatchEntity(entry.todo_id)
+                    todo_match = TodoMatchEntity(entry.todo_id,selfid)
                     todo_match.load(entry)
                     todo_match.todo_match = match
                     result.append(todo_match)
@@ -201,8 +229,8 @@ class TodoRandomJsonHandler(BaseHandler):
         page = self.get_argument("page", None)
         print page
         #TODO filter out the user self's todo
-        entries = self.db.query("SELECT t.*, u.nickname,u.language,u.gender FROM todo t left join auth_user u on todo_user_id = user_id WHERE  todo_status = %s "
-                                "ORDER BY todo_created_date LIMIT %s", 0,total)
+        entries = self.db.query("SELECT t.*, u.nickname,u.language,u.gender FROM todo t left join auth_user u on todo_user_id = user_id "
+                                "WHERE  todo_status = %s ORDER BY todo_created_date LIMIT %s", 0,total)
         for entry in entries:
             todo_match = TodoMatchEntity(entry.todo_id)
             todo_match.load(entry)

@@ -1,7 +1,11 @@
 
 
 <div class="entry">
-  <h1><a href="/todo/{{ entry.todo_slug }}">{{ entry.todo_slug }}</a></h1>
+  {% if entry.todo_group_id %}
+    <h1><a href="/group_chat/{{ entry.todo_group_slug }}">{{ entry.todo_slug }}(Todo Group)</a></h1>
+  {% else %}
+    <h1><a href="/todo/{{ entry.todo_slug }}">{{ entry.todo_slug }}</a></h1>
+  {% end %}
   {% if entry.todo_logo_thumb %}
       <div class="date"><img src="{{ "/img" + entry.todo_logo_thumb }}"/></div>
   {% end  %} 
@@ -26,7 +30,9 @@
        <div class="btn"><a onclick="openShareDialog({{ entry.todo_id }},$('#shareLink'))">{{ _("Share Todo") }}</a></div>
        <div class="btn"><a href="/todo_del?id={{ entry.todo_id }}">{{ _("Remove Todo") }}</a></div>
     {% end  %}
-    <div class="btn"><a href="/todo_find?id={{ entry.todo_id }}">{{ _("Find Todo") }}</a></div>
+    {% if entry.todo_group_id is None %}
+      <div class="btn"><a href="/todo_find?id={{ entry.todo_id }}">{{ _("Find Todo") }}</a></div>
+    {% end %}
     {% if with_update %}
     <div style="margin-top: 10px; margin-bottom: 10px;">
       <div class="update_title">{{ _("What's new update?") }}</div>
