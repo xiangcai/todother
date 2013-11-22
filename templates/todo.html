@@ -2,5 +2,5 @@
 
 {% block body %}
    <div class="admin"><a href="/todo_list">{{ _("Back") }}</a></div>
-  {% module TodoModule(entry, updates=updates, times=times, with_update=True) %}
+  {% module TodoModule(entry, updates=updates, times=times, with_update=with_update) %}
 {% end %}

@@ -9,6 +9,7 @@ import tornado.auth
 import tornado.escape
 import tornado.web
 import tornado.gen
+from tornado.log import app_log
 
 from controller.base import *
 
@@ -19,7 +20,10 @@ class UpdateHandler(BaseHandler):
     def post(self, todo_id):
         detail = self.get_argument("detail")
         pic1 = self.get_argument("pic1")
-        self.db.execute('insert into todo_update (todo_id, user_id, detail_text, update_time, attach_pic_1) values ("%s", "%s", "%s", UTC_TIMESTAMP(), "%s")' % (todo_id, self.current_user.user_id, detail, pic1))
+        if pic1:
+            self.db.execute('insert into todo_update (todo_id, user_id, detail_text, update_time, attach_pic_1) values ("%s", "%s", "%s", UTC_TIMESTAMP(), "%s")' % (todo_id, self.current_user.user_id, detail, pic1))
+        else:
+            self.db.execute('insert into todo_update (todo_id, user_id, detail_text, update_time) values ("%s", "%s", "%s", UTC_TIMESTAMP())' % (todo_id, self.current_user.user_id, detail))
         #redirect('/todo/%s/story' % todo_id)
         self.write(tornado.escape.json_encode({"success": True}))
 
@@ -33,10 +37,12 @@ class StoryHandler(BaseHandler):
         else:
             updates = self.db.query('select * from todo_update where todo_id=%s order by update_time desc' % todo_id)
         times = []
+        cheer_options = []
         if updates:
             for update in updates:
                 times.append(update.update_time)
-        self.render("story.html", updates=updates, times=times)
+                cheer_options.append('Cheer')
+        self.render("story.html", updates=updates, times=times, cheer_options=cheer_options)
 
     def get_json_result(self, todo_id, begin_id=0, count=10):
         updates = self.db.query('select * from todo_update where todo_id=%s order by update_time desc limit %d,%d' % (todo_id, begin_id, count))

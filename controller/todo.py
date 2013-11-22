@@ -1,6 +1,5 @@
 import os
 import sys
-import logging
 import uuid
 
 import json
@@ -8,6 +7,7 @@ import string
 
 import tornado.web
 import tornado.escape
+from tornado.log import app_log
 import urlparse
 import urllib
 
@@ -46,7 +46,11 @@ class TodoHandler(BaseHandler):
             for update in updates:
                 times.append(update.update_time)
 
-        self.render("todo.html", entry=entry, updates=updates, times=times, with_update=True)
+        self.render("todo.html",
+                    entry=entry,
+                    updates=updates,
+                    times=times,
+                    with_update=(self.current_user.user_id == entry.todo_user_id))
 
 class TodoDoneHandler(BaseHandler):
     def get(self, slug):
@@ -68,8 +72,6 @@ class TodoComposeHandler(BaseHandler):
     def get(self):
         id = self.get_argument("id", None)
         action = self.get_argument("action", None)
-        if action:
-            print "action: "+action
         entry = None
         if id:
             entry = self.db.get("SELECT * FROM todo WHERE todo_id = %s", int(id))
@@ -153,8 +155,6 @@ class TodoShareHandler(BaseHandler):
     def get(self):
         id = self.get_argument("id", None)
         type = self.get_argument("type", None)
-        print id
-        print type
         entry = None
         if id and type:
             self.db.execute("UPDATE todo SET todo_type = %s,todo_updated_date=UTC_TIMESTAMP() WHERE todo_id = %s", type,id)
@@ -227,7 +227,6 @@ class TodoRandomJsonHandler(BaseHandler):
         total = 100
         result = []
         page = self.get_argument("page", None)
-        print page
         #TODO filter out the user self's todo
         entries = self.db.query("SELECT t.*, u.nickname,u.language,u.gender FROM todo t left join auth_user u on todo_user_id = user_id "
                                 "WHERE  todo_status = %s ORDER BY todo_created_date LIMIT %s", 0,total)
@@ -239,7 +238,6 @@ class TodoRandomJsonHandler(BaseHandler):
             entry.todo_updated_date = entry.todo_updated_date.strftime('%Y-%m-%d')
         #print entries
         json_result = json.dumps(result, default=lambda a: a.__dict__)
-        print json_result
         self.write(json_result)
 
 class TodoWhatsNewHandler(BaseHandler):

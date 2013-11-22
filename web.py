@@ -17,6 +17,7 @@ from controller import update
 from controller import img
 from controller import search
 from controller import group
+from controller import comment
 
 handlers = [
     (r"/", main.MainHandler),
@@ -47,6 +48,7 @@ handlers = [
     (r"/group_chat/([^/]+)", group.GroupChatHandler),
     (r"/group_message/new", group.GroupMessageNewHandler),
     (r"/group_message/update", group.GroupMessageUpdatesHandler),
+    (r"/comment", comment.CommentHandler),
     ]
 
 if __name__ == "__main__":

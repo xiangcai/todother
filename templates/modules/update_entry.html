@@ -1,5 +1,6 @@
 <div class="update_info" id="{{ entry.update_time }}" style="margin-top: 20px; margin-bottom: 20px;">
   <a href="{{ '/update/%d' % entry.id }}">{{ entry.update_time }}</a>
+  <span id="{{ entry.id }}_cheer_count" class="label label-info">{{ entry.cheer_count }} {{ _("Cheer") }}</span>
   <div class="update_text">{{ entry.detail_text }}</div>
   <div class="update_postfix">
     <div class="update_pic_list">
@@ -11,9 +12,40 @@
     </div>
     <div class="update_media_list"></div>
     <div class="update_func" style="text-align: right;">
-      <a href="javascript:void(0);" onclick="get_test();">{{ _("Cheer") }}</a>
-      <a href="javascript:void(0);">{{ _("Comment") }}</a>
+      <a href="javascript:void(0);" onclick="do_cheer({{ entry.id }});">{{ _('Cheer') }}</a>
+      <a href="javascript:void(0);" onclick="view_comment({{ entry.id }});">{{ entry.comment_count }} {{ _("Comment") }}</a>
     </div>
   </div>
+  <div id="{{ entry.id }}_comment" class="collapse">
+    <dir class="comment_wrapper">
+      <input type="TEXT" id="{{ entry.id }}_comment_content">
+      <a class="btn btn-primary btn-small" onclick="send_comment({{ entry.id }});">{{ _("Comment") }}</a>
+    </dir>
+    <dir id="{{ entry.id }}_comments_list" class="comment_list_wrapper">
+    </dir>
+  </div>
 </div>
+<script>
+  function do_cheer(update_id) {
+    return false;
+  }
 
+  function view_comment(update_id) {
+    $("#" + update_id + "_comment").toggle();
+    return false;
+  }
+
+  function send_comment(update_id) {
+    var content = $("#" + update_id + "_comment_content").val();
+    if (content !== undefined && content != '') {
+      $.ajax({url: "/comment",
+              data: {"update_id": update_id, "content": content, "_xsrf": getCookie("_xsrf")},
+              dataType: "json",
+              type: "POST",
+              success: function(response) {
+                $("#"+update_id+"_comments_list").prepend(response.new_comment);
+                $("#"+update_id+"_comment_content").val('');
+      }});
+    }
+  }
+</script>

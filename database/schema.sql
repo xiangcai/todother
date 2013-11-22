@@ -62,6 +62,8 @@ CREATE TABLE todo_update (
     attach_pic_1 VARCHAR(255),
     attach_pic_2 VARCHAR(255),
     attach_pic_3 VARCHAR(255),
+    comment_count INT NOT NULL DEFAULT 0,
+    cheer_count INT NOT NULL DEFAULT 0,
     KEY (todo_id)
 );
 
@@ -108,5 +110,38 @@ CREATE TABLE  group_message (
   PRIMARY KEY (gmsg_id)
 );
 
+DROP TABLE IF EXISTS todo_comment;
+CREATE TABLE todo_comment (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  todo_id INT(11) NOT NULL,
+  update_id INT NOT NULL,
+  comment_text TEXT,
+  comment_html BLOB,
+  user_id VARCHAR(12) NOT NULL,
+  reply_to_comment INT,
+  reply_to_user_id VARCHAR(12),
+  comment_time DATETIME
+);
 
+DROP TABLE IF EXISTS todo_cheer;
+CREATE TABLE todo_cheer (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  todo_id INT(11) NOT NULL,
+  update_id INT NOT NULL,
+  user_id VARCHAR(12) NOT NULL
+);
+
+DROP TABLE IF EXISTS followship;
+CREATE TABLE followship (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  follower VARCHAR(12) NOT NULL,
+  following VARCHAR(12) NOT NULL
+);
+
+DROP TABLE IF EXISTS friendship;
+CREATE TABLE friendship (
+  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+  follower VARCHAR(12) NOT NULL,
+  following VARCHAR(12) NOT NULL
+);
 
