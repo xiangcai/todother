@@ -39,6 +39,7 @@ CREATE TABLE  todo (
   todo_remind int(11) NOT NULL DEFAULT 0,
   todo_like int(11) NOT NULL DEFAULT 0,
   todo_group_id int(11),
+  todo_group_slug varchar(40),
   todo_pic_path varchar(100),
   todo_type int(11) NOT NULL DEFAULT 1,
   todo_status int(11) NOT NULL DEFAULT 0,
